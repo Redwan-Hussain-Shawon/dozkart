@@ -195,10 +195,10 @@ const addToCart = (buynow='') => {
           
         }
        
-        if (response.message != "alrady add") {
-          var currentCount = parseInt($("#addtoCartCount").text(), 10);
-          $("#addtoCartCount").text(currentCount + 1);
-        }
+        // if (response.message != "alrady add") {
+        //   var currentCount = parseInt($("#addtoCartCount").text(), 10);
+        //   $("#addtoCartCount").text(currentCount + 1);
+        // }
       } else {
         $(".loader-main").hide();
         if (response.message == "redirect") {

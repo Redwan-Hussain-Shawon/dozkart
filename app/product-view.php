@@ -81,7 +81,7 @@ WHERE
                                     </a>
                                     <?php if ($productColor = productColor($slug, $conn)): ?>
                                         <div class='d-flex mb-3'>
-                                            <h4 class='text-paragraph' style='font-size:15px;margin-right:20px'>Color</h4>
+                                            <h4 class='text-paragraph' style='font-size:14px;margin-right:20px'>Color</h4>
 
                                             <div class='d-flex gap-2 '>
                                                 <?php foreach ($productColor as $productColorData): ?>
@@ -97,18 +97,18 @@ WHERE
 
                                         </div>
                                     <?php endif; ?>
-                                    <p class='text-danger d-none mb-1' id='color-error' style='margin-top: -12px;'></p>
+                                    <p class='text-danger d-none mb-3 fw-medium' id='color-error' style='margin-top: -8px;font-size:23px;'></p>
                                    
                                         <div class='d-flex mb-3'>
-                                            <h4 class='text-paragraph' style='font-size:15px;margin-right:33px'>Size</h4>
+                                            <h4 class='text-paragraph' style='font-size:14px;margin-right:33px'>Size</h4>
                                             <div class='d-flex gap-2 '>
                                             <a href="javascript:void(0)">
-                                                    <div class=' p-1 px-2 border-primary  pointer hover-size-product' style='border:1px dashed #dde2e6 ;font-size:14px'><?php echo $mianValueProduct['product_size'] ?></div>
+                                                    <div class=' p-1 px-2 border-primary  pointer hover-size-product' style='border:1px dashed #dde2e6 ;font-size:13px'><?php echo $mianValueProduct['product_size'] ?></div>
                                                 </a>
                                             <?php if ($productSize = productSize($slug, $conn)): ?>
                                                 <?php foreach ($productSize as $productSizeData): ?>
                                                     <a href="<?php echo $productSizeData['size_click_view_url'] ?>" target="_blank">
-                                                        <div class=' p-1 px-2  pointer hover-size-product' style='border:1px dashed #dde2e6 ;font-size:14px'><?php echo $productSizeData['size_name'] ?></div>
+                                                        <div class=' p-1 px-2  pointer hover-size-product' style='border:1px dashed #dde2e6 ;font-size:13px'><?php echo $productSizeData['size_name'] ?></div>
                                                     </a>
                                                 <?php endforeach ?>
                                                 <?php endif ?>
