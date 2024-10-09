@@ -56,17 +56,15 @@ RewriteRule ^fail_pay /dozkart/app/pay_fail.php [L]
 RewriteRule ^invoice /dozkart/app/invoice.php [L]
 
 
-RewriteRule ^sh-admin /dozkart/app/sh-admin/home.php [L]
-RewriteRule ^sh-admin /dozkart/app/sh-admin/home.php [L]
-RewriteRule ^shs-admin/login /dozkart/app/sh-admin/include/login-process.php [L]
-RewriteRule ^sha-admin/dashboard /dozkart/app/sh-admin/dashboard.php [L]
-RewriteRule ^sha-admin/request /dozkart/app/sh-admin/request.php [L]
-RewriteRule ^sha-admin/view-request/([^/]+)$ /dozkart/app/sh-admin/view-request.php?id=$1 [L]
-RewriteRule ^sha-admin/view-success-order/([^/]+)$ /dozkart/app/sh-admin/view-success-order.php?id=$1 [L]
-RewriteRule ^sha-admin/success-order /dozkart/app/sh-admin/success-order.php [L]
-RewriteRule ^sha-admin/processing-order /dozkart/app/sh-admin/processing-order.php [L]
-RewriteRule ^sha-admin/other-status-order /dozkart/app/sh-admin/other-status-order.php [L]
-RewriteRule ^sha-admin/logout /dozkart/app/sh-admin/logout.php [L]
+RewriteRule ^doz-admin /dozkart/app/doz-admin/index.php [L]
+RewriteRule ^admin-doz/product-add /dozkart/app/doz-admin/product-add.php [L]
+
+
+
+
+
+
+
 
 RewriteRule ^test /dozkart/app/test.php [L]
 
