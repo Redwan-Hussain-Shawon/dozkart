@@ -120,7 +120,7 @@ WHERE
 
                                     <form action="<?php base_url('checkout') ?>" method="post">
                                         <div class="d-flex gap-2 align-items-center mb-2">
-                                            <h4 class="h5 text-paragraph" style="font-size: 15px;">Quantity: </h4>
+                                            <h4 class="h5 text-paragraph" style="font-size: 14px;">Quantity: </h4>
                                             <div class="border rounded-1 d-flex align-items-center" style="width: 88px;">
                                                 <button class="btn " type="button" onclick="quantityChange(-1)" style='padding:5px 10px'>
                                                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="minus" class="svg-inline--fa fa-minus w-2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="10" height="10">
