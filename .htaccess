@@ -1,0 +1,76 @@
+DirectoryIndex app/home.php
+RewriteEngine On
+
+<Files "connect/config.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+
+#changeProject
+RewriteRule ^home /dozkart/app/home.php [L]
+RewriteRule ^product-view /dozkart/app/product-view.php [L]
+RewriteRule ^view-product/([^/]+)$ /dozkart/app/product-view.php?id=$1 [L]
+RewriteRule ^categories /dozkart/app/categories.php [L]
+RewriteRule ^categories/([^/]+)$ /dozkart/app/categories.php?id=$1 [L]
+RewriteRule ^cart /dozkart/app/cart.php [L]
+RewriteRule ^checkout /dozkart/app/checkout.php [L]
+RewriteRule ^dashboard /dozkart/app/me.php [L]
+RewriteRule ^address /dozkart/app/address.php [L]
+RewriteRule ^create-address /dozkart/app/create-address.php [L]
+RewriteRule ^update-address/([^/]+)$ /dozkart/app/update-address.php?id=$1 [L]
+RewriteRule ^requests /dozkart/app/requests.php [L]
+RewriteRule ^create-request /dozkart/app/create-request.php [L]
+RewriteRule ^pending-requests /dozkart/app/requests.php [L]
+RewriteRule ^rejected-requests /dozkart/app/requests.php [L]
+RewriteRule ^expired-requests /dozkart/app/requests.php [L]
+RewriteRule ^notifications /dozkart/app/notifications.php [L]
+RewriteRule ^action-needed /dozkart/app/action-needed.php [L]
+RewriteRule ^orders /dozkart/app/orders.php [L]
+RewriteRule ^registration /dozkart/app/registration.php [L]
+RewriteRule ^registration /dozkart/app/registration.php [L]
+RewriteRule ^login /dozkart/app/login.php [L]
+RewriteRule ^process-login /dozkart/app/login-process.php [L]
+RewriteRule ^googleAuth /dozkart/app/googleAuth.php [L]
+RewriteRule ^facebookAuth /dozkart/app/facebookAuth.php [L]
+RewriteRule ^password-reset /dozkart/app/password-reset.php [L]
+RewriteRule ^send-email /dozkart/app/send-email.php [L]
+RewriteRule ^verify-password /dozkart/app/verify-password.php [L]
+RewriteRule ^process-registration /dozkart/app/registration-process.php [L]
+RewriteRule ^logout /dozkart/app/logout.php [L]
+RewriteRule ^privacy-policy /dozkart/app/privacy-policy.php [L]
+RewriteRule ^terms-conditions /dozkart/app/terms-conditions.php [L]
+RewriteRule ^return-refund-policy /dozkart/app/return-refund-policy.php [L]
+RewriteRule ^about-us /dozkart/app/about-us.php [L]
+RewriteRule ^about-of-dozkart /dozkart/app/about-of-dozkart.php [L]
+RewriteRule ^404 /dozkart/app/404.php [L]
+
+Options -Indexes
+
+
+RewriteRule ^payment /dozkart/app/payment.php [L]
+RewriteRule ^success_pay /dozkart/app/pay_success.php [L]
+RewriteRule ^cancel_pay /dozkart/app/pay_cancel.php [L]
+RewriteRule ^fail_pay /dozkart/app/pay_fail.php [L]
+
+RewriteRule ^invoice /dozkart/app/invoice.php [L]
+
+
+RewriteRule ^sh-admin /dozkart/app/sh-admin/home.php [L]
+RewriteRule ^sh-admin /dozkart/app/sh-admin/home.php [L]
+RewriteRule ^shs-admin/login /dozkart/app/sh-admin/include/login-process.php [L]
+RewriteRule ^sha-admin/dashboard /dozkart/app/sh-admin/dashboard.php [L]
+RewriteRule ^sha-admin/request /dozkart/app/sh-admin/request.php [L]
+RewriteRule ^sha-admin/view-request/([^/]+)$ /dozkart/app/sh-admin/view-request.php?id=$1 [L]
+RewriteRule ^sha-admin/view-success-order/([^/]+)$ /dozkart/app/sh-admin/view-success-order.php?id=$1 [L]
+RewriteRule ^sha-admin/success-order /dozkart/app/sh-admin/success-order.php [L]
+RewriteRule ^sha-admin/processing-order /dozkart/app/sh-admin/processing-order.php [L]
+RewriteRule ^sha-admin/other-status-order /dozkart/app/sh-admin/other-status-order.php [L]
+RewriteRule ^sha-admin/logout /dozkart/app/sh-admin/logout.php [L]
+
+RewriteRule ^test /dozkart/app/test.php [L]
+
+ErrorDocument 404 http://localhost/dozkart/404
+ErrorDocument 403 http://localhost/dozkart/404
+
+

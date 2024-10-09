@@ -1,0 +1,12 @@
+[15-May-2024 05:19:10 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'img' in 'field list' in /home/dozkart/public_html/assets/php/function.php:260
+Stack trace:
+#0 /home/dozkart/public_html/assets/php/function.php(260): mysqli->query()
+#1 /home/dozkart/public_html/assets/php/core.php(107): Main->orderChangeStatus()
+#2 {main}
+  thrown in /home/dozkart/public_html/assets/php/function.php on line 260
+[15-May-2024 05:20:33 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'img' in 'field list' in /home/dozkart/public_html/assets/php/function.php:260
+Stack trace:
+#0 /home/dozkart/public_html/assets/php/function.php(260): mysqli->query()
+#1 /home/dozkart/public_html/assets/php/core.php(107): Main->orderChangeStatus()
+#2 {main}
+  thrown in /home/dozkart/public_html/assets/php/function.php on line 260
