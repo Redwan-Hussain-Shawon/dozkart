@@ -58,6 +58,7 @@ RewriteRule ^invoice /dozkart/app/invoice.php [L]
 
 RewriteRule ^doz-admin /dozkart/app/doz-admin/index.php [L]
 RewriteRule ^admin-doz/product-add /dozkart/app/doz-admin/product-add.php [L]
+RewriteRule ^admin-doz/login-process /dozkart/app/doz-admin/login-process.php [L]
 
 
 
