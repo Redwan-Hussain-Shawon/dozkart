@@ -45,7 +45,7 @@ include_once ('../../connect/conn.php');
     <link rel="stylesheet" href="<?php base_url('app/doz-admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') ?>" />
     <link rel="stylesheet" href="<?php base_url('app/doz-admin/assets/vendor/libs/apex-charts/apex-charts.css') ?>" />
 
-    <!-- Page CSS -->
+    <!-- Page CSS -->s
 
     <!-- Helpers -->
     <script src="<?php base_url('app/doz-admin/assets/vendor/js/helpers.js') ?>"></script>
