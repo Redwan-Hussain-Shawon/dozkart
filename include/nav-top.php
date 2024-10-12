@@ -42,7 +42,9 @@
                             $cartData = json_decode($_COOKIE['cart'], true);
                             $cartLength = count($cartData);
                             echo $cartLength;
-                        } 
+                        }else{
+                            echo 0;
+                        }
                         ?>
     </div>
 </a>

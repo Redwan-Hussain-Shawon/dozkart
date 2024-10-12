@@ -67,8 +67,8 @@ WHERE
                                     <p class='mb-0 f-15 fw-semibold'>BDT <?php echo $mianValueProduct['shipping_charge'] ?> </p>
                                 </div>
                                 <div class='d-flex align-items-center gap-2 mb-3'>
-                                    <h3 class='fw-semibold mb-0 ' style='font-size: 16px;'>Total Amount: </h3>
-                                    <p class='mb-0 f-15 fw-semibold text-primary' style='font-size: 16px !important;'>BDT <?php echo $mianValueProduct['product_price']+$mianValueProduct['shipping_charge'] ?> </p>
+                                    <h3 class='fw-semibold mb-0 ' style='font-size: 16px;' >Total Amount: </h3>
+                                    <p class='mb-0 f-15 fw-semibold text-primary' id="totalPriceShow" style='font-size: 16px !important;'>BDT <?php echo $mianValueProduct['product_price']+$mianValueProduct['shipping_charge'] ?> </p>
                                 </div>
 
                                     <a href='<?php echo $mianValueProduct['product_url_link'] ?>' target="_blank" class='d-inline-block mb-3 border py-1 hover-bg-gray' style='background-color:#f8f8f8 ;padding:4px 8px 4px 8px;border-radius:4px;font-size:14px'><?php echo $mianValueProduct['website_name'] ?> View
@@ -87,10 +87,11 @@ WHERE
                                                 <?php foreach ($productColor as $productColorData): ?>
                                                     <label>
                                                         <input type="radio" name="selectedImage" value="<?php echo $productColorData['color_name']; ?>" style="display: none;" />
-                                                        <img src="<?php echo $productColorData['color_image']; ?>" style="width:50px;height:50px" alt="Product image" class="object-fit-contain border p-1 thumbnail pointer selectable-image " data-toggle="tooltip" title="<?php echo $productColorData['color_name']; ?>" data-p-price=<?php echo $productColorData['color_price'] == null ? $mianValueProduct['product_price'] : $productColorData['color_price'] ?> />
+                                                        <img src="<?php echo $productColorData['color_image']; ?>" style="width:50px;height:50px" alt="Product image" class="object-fit-contain border p-1 thumbnail pointer selectable-image " data-toggle="tooltip" title="<?php echo $productColorData['color_name']; ?>" data-p-price=<?php echo $productColorData['color_price'] == null ? $mianValueProduct['product_price'] : $productColorData['color_price'] ?>
+                                                        data-p-totalprice=<?php echo $productColorData['color_price'] == null ? $mianValueProduct['product_price']+$mianValueProduct['shipping_charge'] : $productColorData['color_price']+$mianValueProduct['shipping_charge']  ?>
+                                                        />
                                                     </label>
                                                 <?php endforeach;
-
                                                 ?>
 
                                             </div>

@@ -186,19 +186,15 @@ const addToCart = (buynow='') => {
       if (response.status === "success") {
         $(".loader-main").hide();
         alertFunction("success", "The product has been added to your cart");
+        $('#color-error').hide();
         if(buynow!==''){
           window.location.href = url + "checkout";
         }else{
           loadCartItems();
           var cartOffcanvas = new bootstrap.Offcanvas(document.getElementById('cartOffcanvas'));
           cartOffcanvas.show();
-          
         }
-       
-        // if (response.message != "alrady add") {
-        //   var currentCount = parseInt($("#addtoCartCount").text(), 10);
-        //   $("#addtoCartCount").text(currentCount + 1);
-        // }
+
       } else {
         $(".loader-main").hide();
         if (response.message == "redirect") {
@@ -429,6 +425,7 @@ $('.selectable-image').on("click",function(){
   $(this).addClass('active');
 
   $('#priceShow').html('BDT '+ $(this).data('p-price'));
+  $('#totalPriceShow').html('BDT '+ $(this).data('p-totalprice'));
 })
 
 
@@ -436,3 +433,13 @@ $('.selectable-image').on("click",function(){
 $('.categoryClick').on('click', function() {
   $(this).next().toggleClass('collapse')
 })
+
+
+
+
+
+const filterSubmit = ()=>{
+  var minPrice = $('#min-price').val();
+  var maxPrice = $('#max-price').val();
+  console.log(minPrice,maxPrice)
+}

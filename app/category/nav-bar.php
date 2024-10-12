@@ -20,23 +20,24 @@
             <div class="fs-15  border-bottom " style='font-weight: 600;padding:13px 16px;font-size:18px'>
                 Filters
             </div>
-            <div class="">
+            <form class="">
                 <div class="border-bottom" style="padding:13px 16px">
                     <h4 class="text-black f-14 fw-semibold">CATEGORIES</h4>
                     <h5 class="text-black mb-0 ml-1 f-14 pointer fw-normal">Mixer Grinder</h5>
                 </div>
                 <div class="border-bottom" style="padding:13px 16px">
                     <h4 class="text-black f-14 fw-semibold">PRICE</h4>
-                    <input type="range" class="input-group ">
+                    <!-- <input type="range" class="input-group "> -->
                     <div class="d-flex gap-2 justify-content-center align-items-center mt-2">
-                        <select name="" id="" class="border p-1 w-100 outline-none f-14">
+                        <select name=""  class="border p-1 w-100 outline-none f-14" id='min-price'>
                             <option value="">Min</option>
                             <option value="1000">1000</option>
                             <option value="2000">2000</option>
                             <option value="2500">2500</option>
                         </select>
                         to
-                        <select name="" id="" class="border p-1 w-100 outline-none f-14">
+                        <select name=""  class="border p-1 w-100 outline-none f-14" id='max-price'>
+                        <option value="">Max</option>
                             <option value="1000">1000</option>
                             <option value="2000">2000</option>
                             <option value="2500">2500</option>
@@ -143,11 +144,11 @@
                 </div>
                <div class="d-flex mt-3">
                <a href="" class="btn w-100" style="border-radius: 2px;background:#f6f6f6">Cancel</a>
-               <button class="btn btn-primary w-100" style="border-radius: 2px;">Submit</button>
+               <button class="btn btn-primary w-100" style="border-radius: 2px;" onclick="filterSubmit() ">Submit</button>
                </div>
 
 
-            </div>
+                        </form>
 
         </div>
 

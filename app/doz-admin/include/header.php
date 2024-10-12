@@ -1,7 +1,13 @@
 <?php  
+if (session_status() === PHP_SESSION_NONE) {
+  session_start(); // Start the session if it hasn't been started yet
+}
 include_once ('../../connect/base_url.php');
 include_once ('../../connect/conn.php');
-
+include_once ('include/helper.php');
+if(!isset($_SESSION['admin_redwan']) || empty($_SESSION['admin_redwan'])){
+  redirect('doz-admin');
+}
 ?>
 
 <!doctype html>
@@ -25,7 +31,7 @@ include_once ('../../connect/conn.php');
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="<?php base_url('assets/img/dozkart.svg') ?>" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -52,9 +58,27 @@ include_once ('../../connect/conn.php');
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="<?php base_url('app/doz-admin/assets/js/config.js') ?>"></script>
+    <link rel="stylesheet" href="<?php base_url('app/doz-admin/assets/css/alert.min.css') ?>">
+    <script src="<?php base_url('app/doz-admin/assets/js/alert.min.js') ?>"></script>
   </head>
 
   <body>
+
+  <script>
+    <?php if (isset($_SESSION['alert'])): ?>
+        const alertType = "<?php echo $_SESSION['alert']['type']; ?>";
+        const alertMessage = "<?php echo $_SESSION['alert']['message']; ?>";
+
+        Swal.fire({
+            icon: alertType,
+            title: alertMessage,
+            showConfirmButton: true
+        });
+
+        <?php unset($_SESSION['alert']); ?>
+    <?php endif; ?>
+</script>
+
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -82,6 +106,11 @@ include_once ('../../connect/conn.php');
                 <li class="menu-item active">
                   <a href="<?php base_url('admin-doz/product-add')  ?>" class="menu-link">
                     <div class="text-truncate" data-i18n="Analytics">Product add</div>
+                  </a>
+                </li>
+                 <li class="menu-item active">
+                  <a href="<?php base_url('admin-doz/product-category')  ?>" class="menu-link">
+                    <div class="text-truncate" data-i18n="Analytics">Product Category</div>
                   </a>
                 </li>
               </ul>
@@ -458,18 +487,7 @@ include_once ('../../connect/conn.php');
               <!-- /Search -->
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
-                <!-- Place this tag where you want the button to render. -->
-                <li class="nav-item lh-1 me-4">
-                  <a
-                    class="github-button"
-                    href="https://github.com/themeselection/sneat-html-admin-template-free"
-                    data-icon="octicon-star"
-                    data-size="large"
-                    data-show-count="true"
-                    aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-                    >Star</a
-                  >
-                </li>
+             
 
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -478,7 +496,7 @@ include_once ('../../connect/conn.php');
                     href="javascript:void(0);"
                     data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="<?php base_url('assets/img/avatar-place.png') ?>" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -487,7 +505,7 @@ include_once ('../../connect/conn.php');
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="<?php base_url('assets/img/avatar-place.png') ?>" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -505,23 +523,12 @@ include_once ('../../connect/conn.php');
                         <i class="bx bx-user bx-md me-3"></i><span>My Profile</span>
                       </a>
                     </li>
-                    <li>
-                      <a class="dropdown-item" href="#"> <i class="bx bx-cog bx-md me-3"></i><span>Settings</span> </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 bx bx-credit-card bx-md me-3"></i
-                          ><span class="flex-grow-1 align-middle">Billing Plan</span>
-                          <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
-                        </span>
-                      </a>
-                    </li>
+
                     <li>
                       <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="javascript:void(0);">
+                      <a class="dropdown-item" href="<?php base_url('admin-doz/logout') ?>">
                         <i class="bx bx-power-off bx-md me-3"></i><span>Log Out</span>
                       </a>
                     </li>

@@ -57,8 +57,13 @@ RewriteRule ^invoice /dozkart/app/invoice.php [L]
 
 
 RewriteRule ^doz-admin /dozkart/app/doz-admin/index.php [L]
+RewriteRule ^admin-doz/dashboard /dozkart/app/doz-admin/dashboard.php [L]
 RewriteRule ^admin-doz/product-add /dozkart/app/doz-admin/product-add.php [L]
+RewriteRule ^admin-doz/process-product-add /dozkart/app/doz-admin/product-process.php [L]
+RewriteRule ^admin-doz/product-category /dozkart/app/doz-admin/product-category.php [L]
+RewriteRule ^admin-doz/update-product-category /dozkart/app/doz-admin/product-category-update.php [L]
 RewriteRule ^admin-doz/login-process /dozkart/app/doz-admin/login-process.php [L]
+RewriteRule ^admin-doz/logout /dozkart/app/doz-admin/logout.php [L]
 
 
 

@@ -2,19 +2,7 @@
         <!-- / Layout page -->
       </div>
 
-      <!-- Overlay -->
-      <div class="layout-overlay layout-menu-toggle"></div>
-    </div>
-    <!-- / Layout wrapper -->
-
-    <div class="buy-now">
-      <a
-        href="https://themeselection.com/item/sneat-dashboard-pro-bootstrap/"
-        target="_blank"
-        class="btn btn-danger btn-buy-now"
-        >Upgrade to Pro</a
-      >
-    </div>
+   
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -27,6 +15,8 @@
 
     <!-- endbuild -->
 
+
+
     <!-- Vendors JS -->
     <script src="<?php base_url('app/doz-admin/assets/vendor/libs/apex-charts/apexcharts.js') ?>"></script>
 
@@ -35,6 +25,7 @@
 
     <!-- Page JS -->
     <script src="<?php base_url('app/doz-admin/assets/js/dashboards-analytics.js') ?>"></script>
+    <script src="<?php base_url('app/doz-admin/assets/js/script.js') ?>"></script>
 
     <!-- Place this tag before closing body tag for github widget button. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

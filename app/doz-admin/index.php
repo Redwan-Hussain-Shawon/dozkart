@@ -1,4 +1,5 @@
 <?php  
+session_start();
 include_once ('../../connect/base_url.php');
 include_once ('../../connect/conn.php');
 
@@ -56,13 +57,11 @@ include_once ('../../connect/conn.php');
 
   <body>
 
-
-
-<div class="container-xxl">
+<div class="container-xxl d-flex align-items-center justify-content-center" style="height: 100vh;">
   <div class="authentication-wrapper authentication-basic container-p-y">
     <div class="authentication-inner">
       <!-- Register -->
-      <div class="card px-sm-6 px-0 mx-auto" style="max-width: 500px;">
+      <div class="card px-sm-6 px-0 mx-auto" style="width: 500px;">
         <div class="card-body">
           <!-- Logo -->
           <div class="app-brand justify-content-center">
@@ -71,7 +70,13 @@ include_once ('../../connect/conn.php');
           <!-- /Logo -->
           <h4 class="mb-1">Welcome to Dozkart! 👋</h4>
           <p class="mb-6">Please sign-in to your Dashboard</p>
-
+          <?php if(isset($_SESSION['alert'])){ ?>
+          <div class="alert alert-danger">
+            <?php echo $_SESSION['alert']['message'];
+                  unset($_SESSION['alert']);
+            ?>
+          </div>
+          <?php } ?>
           <form id="formAuthentication" class="mb-6 fv-plugins-bootstrap5 fv-plugins-framework" action="<?php base_url('admin-doz/login-process') ?>" method="Post" novalidate="novalidate">
             <div class="mb-6 fv-plugins-icon-container">
               <label for="email" class="form-label">Email</label>
@@ -86,20 +91,10 @@ include_once ('../../connect/conn.php');
               </div>
               <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
             </div>
-            <div class="mb-8">
-              <div class="d-flex justify-content-between mt-8">
-                <div class="form-check mb-0 ms-2">
-                  <input class="form-check-input" type="checkbox" id="remember-me">
-                  <label class="form-check-label" for="remember-me">
-                    Remember Me
-                  </label>
-                </div>              
-              </div>
-            </div>
             <div class="mb-6">
               <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
             </div>
-          <input type="hidden"></form>
+         </form>
 
         
 
