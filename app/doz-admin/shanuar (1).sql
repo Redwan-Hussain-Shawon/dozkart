@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2024 at 06:47 PM
+-- Generation Time: Oct 15, 2024 at 10:52 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -73,10 +73,9 @@ INSERT INTO `address` (`id`, `user_id`, `name`, `phone`, `country`, `postal_code
 
 CREATE TABLE `admin` (
   `id` int(10) NOT NULL,
-  `name` varchar(250) NOT NULL,
+  `name` varchar(250) DEFAULT NULL,
   `email` varchar(150) NOT NULL,
-  `phone` varchar(50) NOT NULL,
-  `pass` varchar(50) NOT NULL,
+  `pass` varchar(255) NOT NULL,
   `parmition` int(10) DEFAULT 3,
   `time_date` datetime NOT NULL DEFAULT current_timestamp(),
   `img` text DEFAULT NULL
@@ -86,8 +85,8 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `name`, `email`, `phone`, `pass`, `parmition`, `time_date`, `img`) VALUES
-(1, 'ebrahim', 'e@gmail.com', '019', '827ccb0eea8a706c4c34a16891f84e7b', 1, '2024-05-01 10:36:19', '');
+INSERT INTO `admin` (`id`, `name`, `email`, `pass`, `parmition`, `time_date`, `img`) VALUES
+(2, 'redwan', 'redwan@gmail.com', '$2y$10$jzfVSNGeOoJ1omZxOcrjeuLUcEebE6mLRzhCII9hufMohEvowCD3a', 3, '2024-10-12 13:33:18', NULL);
 
 -- --------------------------------------------------------
 
@@ -178,7 +177,6 @@ CREATE TABLE `products` (
   `product_title` varchar(255) NOT NULL,
   `product_slug` varchar(255) NOT NULL,
   `product_category` varchar(255) NOT NULL,
-  `product_color` varchar(255) NOT NULL,
   `product_price` float NOT NULL,
   `shipping_charge` float NOT NULL,
   `product_size` varchar(255) NOT NULL,
@@ -200,9 +198,15 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `product_title`, `product_slug`, `product_category`, `product_color`, `product_price`, `shipping_charge`, `product_size`, `product_ratting`, `product_rating_star`, `product_rating_count`, `product_reviews`, `product_brand_name`, `product_props`, `website_name`, `product_description`, `product_url_link`, `keyword`, `status`, `date`) VALUES
-(1, 'Longway Dlx 750 W Juicer Mixer Grinder  (Super | 4 Jars | White & Blue)\n', 'thomson-pro-500w-juicer-mixer-grinder-kitchen-master-pro-3-jars-black', 'mixer-grinder', 'White & Blue', 1000, 1600, '30 Jar', 4.2, 4, 1020, '883', 'Crompton', '{\n    \"Colour\": \"Black & Grey\",\n    \"Product Dimensions\": \"19D x 17.5W x 22.5H Centimeters\",\n    \"Blade Material\": \"Stainless Steel\",\n    \"Capacity\": \"1.2 litres\",\n    \"Controls Type\": \"Knob Control\",\n    \"Item Weight\": \"3.5 Kilograms\",\n    \"Model Name\": \"Crompton DS 500W Mixer Grinder\",\n    \"Is Dishwasher Safe\": true,\n    \"Manufacturer\": \"Crompton Greaves Consumer Electricals Limited, Equinox Business Park, 1st Floor, Tower 3, LBS Marg, Kurla (W), Mumbai 400070, Maharashtra, India, Ph: +91 22 6167 8499\"\n}', 'Amazon', 'Give a new and refreshing look to your kitchen with the elegant design by Longway. The Longway Mixer grinder is capable of delivering the best out of all your spices and making all your kitchen experiences hassle free. This Mixer grinder is designed under the supervision of many professionals who ensure the quality check and energy efficiency.\r\n', 'https://www.amazon.in/Crompton-BLK-Powertron-Technology-Stainless/dp/B0C7LKSPKY/ref=sr_1_2_sspa?dib=eyJ2IjoiMSJ9.iWD6OIgyCrejHoBBdoxPx1PLun5voAeLC7prOVAJt0imvv0j3U8iSlLfC3EGUF8qAgAIpzk1K6HCcovdikyhqfFWFLqGIPoen1SJuoGUX8Xgyhe2103UzHnzUrW__OEmKO3nS2OikW7QLyRfp2yTzxGoxy2xr3y3aq96M2t2LSsCXPCMjiYJCFaSYTnsZT42vELno4-jyg7A1clf3FpGeW8LP9I_SGeUraDL_9fsSUs.hW6C1LvUb8uNWkKD1zoG6dApiVKDjz0HfEsvVy_iS6M&dib_tag=se&keywords=mixer%2Bgrinder&qid=1728219134&sr=8-2-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1', NULL, 1, '2024-10-06 20:57:10'),
-(2, 'dsdf', 'grinder-kitchen-master-pro-3-jars-black', 'mixer-grinder', 'sdf', 100, 100, 'dfsdfsdf', 234, 4, 23424, 'dfsdf', 'sdf', 'sdf', 'sfd', 'sf', NULL, NULL, 1, '2024-10-08 09:20:34');
+INSERT INTO `products` (`product_id`, `product_title`, `product_slug`, `product_category`, `product_price`, `shipping_charge`, `product_size`, `product_ratting`, `product_rating_star`, `product_rating_count`, `product_reviews`, `product_brand_name`, `product_props`, `website_name`, `product_description`, `product_url_link`, `keyword`, `status`, `date`) VALUES
+(1, 'Longway Dlx 750 W Juicer Mixer Grinder  (Super | 4 Jars | White & Blue)\n', 'thomson-pro-500w-juicer-mixer-grinder-kitchen-master-pro-3-jars-black', 'mixer-grinder', 1000, 1600, '30 Jar', 4.2, 4, 1020, '883', 'Crompton', '{\n    \"Colour\": \"Black & Grey\",\n    \"Product Dimensions\": \"19D x 17.5W x 22.5H Centimeters\",\n    \"Blade Material\": \"Stainless Steel\",\n    \"Capacity\": \"1.2 litres\",\n    \"Controls Type\": \"Knob Control\",\n    \"Item Weight\": \"3.5 Kilograms\",\n    \"Model Name\": \"Crompton DS 500W Mixer Grinder\",\n    \"Is Dishwasher Safe\": true,\n    \"Manufacturer\": \"Crompton Greaves Consumer Electricals Limited, Equinox Business Park, 1st Floor, Tower 3, LBS Marg, Kurla (W), Mumbai 400070, Maharashtra, India, Ph: +91 22 6167 8499\"\n}', 'Amazon', 'Give a new and refreshing look to your kitchen with the elegant design by Longway. The Longway Mixer grinder is capable of delivering the best out of all your spices and making all your kitchen experiences hassle free. This Mixer grinder is designed under the supervision of many professionals who ensure the quality check and energy efficiency.\r\n', 'https://www.amazon.in/Crompton-BLK-Powertron-Technology-Stainless/dp/B0C7LKSPKY/ref=sr_1_2_sspa?dib=eyJ2IjoiMSJ9.iWD6OIgyCrejHoBBdoxPx1PLun5voAeLC7prOVAJt0imvv0j3U8iSlLfC3EGUF8qAgAIpzk1K6HCcovdikyhqfFWFLqGIPoen1SJuoGUX8Xgyhe2103UzHnzUrW__OEmKO3nS2OikW7QLyRfp2yTzxGoxy2xr3y3aq96M2t2LSsCXPCMjiYJCFaSYTnsZT42vELno4-jyg7A1clf3FpGeW8LP9I_SGeUraDL_9fsSUs.hW6C1LvUb8uNWkKD1zoG6dApiVKDjz0HfEsvVy_iS6M&dib_tag=se&keywords=mixer%2Bgrinder&qid=1728219134&sr=8-2-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1', NULL, 1, '2024-10-06 20:57:10'),
+(10, 'This is Product', 'this-is-product-426', 'mixer-grinder', 234, 234, 'size defalut', 3, 5, 0, '', 'ebaliy', '', 'sdf', '<p>werwr</p>', 'sdfsdf', 'sdfsf', 1, '2024-10-13 21:18:21'),
+(20, 'kkkk', 'kkkk-619', 'mixer-grinder', 0, 0, '', 0, 0, 0, '', '', '{\"\":\"\"}', '', '', '', '', 1, '2024-10-13 21:50:00'),
+(21, 'new product', 'new-product-194', 't-shirts', 0, 0, 'size defalut', 0, 0, 0, '', '', '{\"wrwrwr\":\"wrwr\",\"\":\"\"}', '', '<p>sdfsf</p>', '', '', 1, '2024-10-13 22:54:12'),
+(22, 'new product', 'new-product-268', 't-shirts', 0, 234, 'size defalut', 3.5, 0, 23424, '234234', 'sdfsf', '{\"wrwrwr\":\"wrwr\",\"it is prist prosp\":\"sdfsf\"}', '234243', '<p>sdfsdf</p>', 'sdfsdf', 'sdfsf', 1, '2024-10-13 23:18:04'),
+(23, 'This is Product', 'this-is-product-676', 'mixer-grinder', 234234, 0, 'size defalut', 0, 0, 0, '', '', '{\"\":\"\"}', '', '', '', '', 1, '2024-10-13 23:20:33'),
+(24, 'sdfsdfsdf', 'sdfsdfsdf-125', 'mixer-grinder', 0, 0, '', 0, 0, 0, '', '', '{\"\":\"\"}', '', '', '', '', 1, '2024-10-13 23:20:49'),
+(25, 'sdfsfsfsdf', 'sdfsfsfsdf-422', 'mixer-grinder', 0, 0, '', 0, 0, 0, '', '', '{\"\":\"\"}', '', '', '', '', 1, '2024-10-13 23:21:42');
 
 -- --------------------------------------------------------
 
@@ -213,16 +217,21 @@ INSERT INTO `products` (`product_id`, `product_title`, `product_slug`, `product_
 CREATE TABLE `product_category` (
   `category_id` int(11) NOT NULL,
   `category_name` varchar(255) NOT NULL,
-  `payment_advance` int(11) NOT NULL,
-  `category_slug` varchar(255) NOT NULL
+  `payment_advance` varchar(100) NOT NULL,
+  `category_slug` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '1.active 2.inactive'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_category`
 --
 
-INSERT INTO `product_category` (`category_id`, `category_name`, `payment_advance`, `category_slug`) VALUES
-(1, 'Mixer Grinder', 50, 'mixer-grinder');
+INSERT INTO `product_category` (`category_id`, `category_name`, `payment_advance`, `category_slug`, `status`) VALUES
+(1, 'Mixer Grinder', '40%', 'mixer-grinder', 1),
+(13, 'T Shirts', '70%', 't-shirt', 1),
+(16, 'T Shirts', '70%', 't-shirts', 1),
+(17, 'T Shirts', '70%', 'serwer', 2),
+(20, 'T Shirts', '10%', 'werwerwer', 2);
 
 -- --------------------------------------------------------
 
@@ -243,8 +252,16 @@ CREATE TABLE `product_color` (
 --
 
 INSERT INTO `product_color` (`color_id`, `product_slug`, `color_name`, `color_price`, `color_image`) VALUES
-(1, 'thomson-pro-500w-juicer-mixer-grinder-kitchen-master-pro-3-jars-black', 'Black', 1102, 'https://rukminim2.flixcart.com/image/416/416/xif0q/mixer-grinder-juicer/h/n/k/-original-imah22bp2bhg4phf.jpeg?q=70&crop=false'),
-(5, 'thomson-pro-500w-juicer-mixer-grinder-kitchen-master-pro-3-jars-black', 'White & Blue', NULL, 'https://rukminim2.flixcart.com/image/416/416/xif0q/mixer-grinder-juicer/z/t/d/-original-imah22bpezan9zhh.jpeg?q=70&crop=false');
+(8, 'dsdf-1540267179', 'Red<br>', 50, 'jui-apu-banner-facebook2_Mesa de trabajo 1_20241013_165705.jpg'),
+(45, 'kkkk-619', '', 0, '457788001_122192909492022237_8ss952949558127493328_n_20241013_175000.jpg'),
+(46, 'kkkk-619', '', 0, 'shawnarwerwer-01_20241013_175000.jpg'),
+(47, 'kkkk-619', '', 0, 'preloader-bg_184X184_20241013_175000.png'),
+(48, 'kkkk-619', '', 0, 'shawnariou-01_20241013_175000.jpg'),
+(49, 'new-product-194', 'werw', 0, 'Untitleddssdfd-1_20241013_185412.png'),
+(50, 'new-product-194', 'werw', 0, '009cfcbb-1b19-dserwer8817-7ec31504757e_20241013_185412.png'),
+(51, 'new-product-194', 'werwr', 0, 'Screenshot 2ll024-10-01 234700_20241013_185412.png'),
+(52, 'new-product-268', 'werw', 0, 'Untitleddssdfd-1_20241013_191804.png'),
+(53, 'new-product-268', '', 0, 'jui-apu-banner-facebook2_Mesa de trabajo 1_20241013_191804.jpg');
 
 -- --------------------------------------------------------
 
@@ -263,11 +280,43 @@ CREATE TABLE `product_image` (
 --
 
 INSERT INTO `product_image` (`image_id`, `product_slug`, `image_url`) VALUES
-(1, 'thomson-pro-500w-juicer-mixer-grinder-kitchen-master-pro-3-jars-black', 'https://rukminim2.flixcart.com/image/416/416/xif0q/mixer-grinder-juicer/z/t/d/-original-imah22bpezan9zhh.jpeg?q=70&crop=false'),
-(2, 'thomson-pro-500w-juicer-mixer-grinder-kitchen-master-pro-3-jars-black', 'https://rukminim2.flixcart.com/image/416/416/xif0q/mixer-grinder-juicer/w/u/8/-original-imah4b6mys7fqhgv.jpeg?q=70&crop=false'),
-(3, 'thomson-pro-500w-juicer-mixer-grinder-kitchen-master-pro-3-jars-black', 'https://rukminim2.flixcart.com/image/416/416/xif0q/mixer-grinder-juicer/v/b/b/-original-imags2fftfqug3uw.jpeg?q=70&crop=false'),
-(4, 'thomson-pro-500w-juicer-mixer-grinder-kitchen-master-pro-3-jars-black', 'https://rukminim2.flixcart.com/image/416/416/xif0q/mixer-grinder-juicer/j/a/0/-original-imags5ggz9dnzgdj.jpeg?q=70&crop=false'),
-(12, 'grinder-kitchen-master-pro-3-jars-black', 'sd');
+(16, 'this-is-product-426', '461999996_564986465866290_6069568626407301504_n_20241013_171821.jpg'),
+(18, 'this-is-product-426', '461999996_564986465866290_6069568626407301504_n_20241013_171821.jpg'),
+(19, 'this-is-product-487', '461999996_564986465866290_6069568626407301504_n_20241013_172958.jpg'),
+(22, 'this-is-product-513', '461999996_564986465866290_6069568626407301504_n_20241013_173224.jpg'),
+(23, 'this-is-product-513', 'jui-apu-sddrfacebook2_Mesa de trabajo 1_20241013_173224.jpg'),
+(24, 'this-is-product-513', '2dd_20241013_173224.png'),
+(25, 'this-is-product-155', '461999996_564986465866290_6069568626407301504_n_20241013_173424.jpg'),
+(26, 'this-is-product-155', 'WhatsApp Image 2024-10-09 at 11.33.06 PM_20241013_173424.jpeg'),
+(27, 'this-is-product-155', '457788001_122192909492022237_8ss952949558127493328_n_20241013_173424.jpg'),
+(28, 'this-is-product-155', 'ebc2ec488c7f40d5931c12b625beb7e9_20241013_173424.avif'),
+(29, 'this-is-product-155', 'WhatsApp Image 2024-10-09 at 11.33.06 PM_20241013_173424.jpeg'),
+(30, 'this-is-product-183', '461999996_564986465866290_6069568626407301504_n_20241013_173650.jpg'),
+(31, 'this-is-product-183', '009cfcbb-1b19-4ckkkcd-8817-7ec31504757e_20241013_173650.png'),
+(32, 'this-is-product-183', '2dd_20241013_173650.png'),
+(33, 'this-is-product-183', 'jui-apu-banner-facebook2_Mesa de trabajo 1_20241013_173650.jpg'),
+(34, 'this-is-product-304', '461999996_564986465866290_6069568626407301504_n_20241013_174014.jpg'),
+(35, 'this-is-product-304', 'jui-apu-banner-facebook2_Mesa de trabajo 1_20241013_174014.jpg'),
+(36, 'this-is-product-304', '009cfcbb-1b19-dserwer8817-7ec31504757e_20241013_174014.png'),
+(37, 'this-is-product-304', 'tdesign_service_20241013_174014.svg'),
+(38, 'this-is-product-304', '009cfcbb-1b19-dserwer8817-7ec31504757e_20241013_174014.png'),
+(39, 'this-is-product-304', 'WhatsApp Image 2024-10-10 at 11.54.57 AM_20241013_174014.jpeg'),
+(40, 'this-is-product-304', '009cfcbb-1b19-4ckkkcd-8817-7ec31504757e_20241013_174014.png'),
+(41, 'this-is-product-680', '461999996_564986465866290_6069568626407301504_n_20241013_174057.jpg'),
+(42, 'this-is-product-680', 'jui-apu-banner-facebook2_Mesa de trabajo 1_20241013_174057.jpg'),
+(43, 'iouou-507', '461999996_564986465866290_6069568626407301504_n_20241013_174241.jpg'),
+(44, 'iouou-507', 'jui-apu-banner-facebook2_Mesa de trabajo 1_20241013_174241.jpg'),
+(45, 'iouou-507', '009cfcbb-1b19-4ckkkcd-8817-7ec31504757e_20241013_174241.png'),
+(46, 'iouou-560', '461999996_564986465866290_6069568626407301504_n_20241013_174355.jpg'),
+(47, 'iouou-560', 'bi_airplane-fill_20241013_174355.svg'),
+(48, 'iouou-663', '461999996_564986465866290_6069568626407301504_n_20241013_174448.jpg'),
+(49, 'iouou-663', 'Untitddled-2_20241013_174448.png'),
+(50, 'kkkk-619', 'bi_airplane-fill_20241013_175000.svg'),
+(51, 'kkkk-619', 'WhatsApp Image 2024-10-09 at 11.33.06 PM_20241013_175000.jpeg'),
+(52, 'kkkk-619', 'jui-apu-banner-facebook2_Mesa de trabajo 1_20241013_175000.jpg'),
+(53, 'new-product-194', 'jui-apu-sddrfacebook2_Mesa de trabajo 1_20241013_185412.jpg'),
+(54, 'new-product-194', 'jui-apu-banner-facebook2_Mesa de trabajo 1_20241013_185412.jpg'),
+(55, 'new-product-268', 'jui-apu-sddrfacebook2_Mesa de trabajo 1_20241013_191804.jpg');
 
 -- --------------------------------------------------------
 
@@ -1395,7 +1444,10 @@ CREATE TABLE `product_size` (
 --
 
 INSERT INTO `product_size` (`size_id`, `product_slug`, `size_name`, `size_click_view_url`) VALUES
-(2, 'thomson-pro-500w-juicer-mixer-grinder-kitchen-master-pro-3-jars-black', '4 Jar', 'https://www.amazon.in/Crompton-BLK-Powertron-Technology-Stainless/dp/B0C7LKSPKY/ref=sr_1_2_sspa?dib=eyJ2IjoiMSJ9.iWD6OIgyCrejHoBBdoxPx1PLun5voAeLC7prOVAJt0imvv0j3U8iSlLfC3EGUF8qAgAIpzk1K6HCcovdikyhqfFWFLqGIPoen1SJuoGUX8Xgyhe2103UzHnzUrW__OEmKO3nS2OikW7QLy');
+(2, 'thomson-pro-500w-juicer-mixer-grinder-kitchen-master-pro-3-jars-black', '4 Jar', 'https://www.amazon.in/Crompton-BLK-Powertron-Technology-Stainless/dp/B0C7LKSPKY/ref=sr_1_2_sspa?dib=eyJ2IjoiMSJ9.iWD6OIgyCrejHoBBdoxPx1PLun5voAeLC7prOVAJt0imvv0j3U8iSlLfC3EGUF8qAgAIpzk1K6HCcovdikyhqfFWFLqGIPoen1SJuoGUX8Xgyhe2103UzHnzUrW__OEmKO3nS2OikW7QLy'),
+(3, 'new-product-194', 'wrwrwr', 'wrwrw'),
+(4, 'new-product-194', 'werwr', 'werwrwr'),
+(5, 'new-product-268', 'wrwrwr', 'wrwrw');
 
 -- --------------------------------------------------------
 
@@ -1450,8 +1502,7 @@ ALTER TABLE `address`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `phone` (`phone`);
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `cart`
@@ -1551,7 +1602,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `cart`
@@ -1575,25 +1626,25 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `product_category`
 --
 ALTER TABLE `product_category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `product_color`
 --
 ALTER TABLE `product_color`
-  MODIFY `color_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `color_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `product_image`
 --
 ALTER TABLE `product_image`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `product_main`
@@ -1611,7 +1662,7 @@ ALTER TABLE `product_request`
 -- AUTO_INCREMENT for table `product_size`
 --
 ALTER TABLE `product_size`
-  MODIFY `size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -1661,28 +1712,10 @@ ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`product_category`) REFERENCES `product_category` (`category_slug`);
 
 --
--- Constraints for table `product_color`
---
-ALTER TABLE `product_color`
-  ADD CONSTRAINT `product_color_ibfk_1` FOREIGN KEY (`product_slug`) REFERENCES `products` (`product_slug`);
-
---
--- Constraints for table `product_image`
---
-ALTER TABLE `product_image`
-  ADD CONSTRAINT `product_image_ibfk_1` FOREIGN KEY (`product_slug`) REFERENCES `products` (`product_slug`);
-
---
 -- Constraints for table `product_request`
 --
 ALTER TABLE `product_request`
   ADD CONSTRAINT `product_request_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-
---
--- Constraints for table `product_size`
---
-ALTER TABLE `product_size`
-  ADD CONSTRAINT `product_size_ibfk_1` FOREIGN KEY (`product_slug`) REFERENCES `products` (`product_slug`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
