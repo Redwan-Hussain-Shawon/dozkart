@@ -104,8 +104,12 @@ if(!isset($_SESSION['admin_redwan']) || empty($_SESSION['admin_redwan'])){
               </a>
               <ul class="menu-sub">
                 <li class="menu-item active">
+                  <a href="<?php base_url('admin-doz/show-product')  ?>" class="menu-link">
+                    <div class="text-truncate" data-i18n="Analytics">Product View</div>
+                  </a>
+                </li><li class="menu-item active">
                   <a href="<?php base_url('admin-doz/product-add')  ?>" class="menu-link">
-                    <div class="text-truncate" data-i18n="Analytics">Product add</div>
+                    <div class="text-truncate" data-i18n="Analytics">Product Add</div>
                   </a>
                 </li>
                  <li class="menu-item active">

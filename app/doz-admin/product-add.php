@@ -1,6 +1,5 @@
 <?php
 include_once('include/header.php');
-
 ?>
 
 <div class="content-wrapper">
@@ -15,13 +14,7 @@ include_once('include/header.php');
                         <label class="form-label" for="product_title">Product Title</label>
                         <input type="text" id="product_title" class="form-control" placeholder="add product title" name="product_title" required>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="product_title">Product Slug </label>
-                        <div class="input-group input-group-merge">
-                            <input type="text" id="product_title" name="product_slug" class="form-control" placeholder="product title" aria-label="john.doe" aria-describedby="multicol-email2">
 
-                        </div>
-                    </div>
                     <div class="col-md-4">
                         <div class="form-password-toggle">
                             <label class="form-label" for="multicol-password">Product Category</label>
@@ -50,7 +43,7 @@ include_once('include/header.php');
                         <div class="form-password-toggle">
                             <label class="form-label" for="shipping_charge">Shipping Charge</label>
                             <div class="input-group input-group-merge">
-                                <input type="number" id="shipping_charge" name="shipping_charge" class="form-control" placeholder="product price" aria-describedby="multicol-confirm-password2">
+                                <input type="number" id="shipping_charge" name="shipping_charge" class="form-control" placeholder="shipping charge" aria-describedby="multicol-confirm-password2">
                             </div>
                         </div>
                     </div>
@@ -66,7 +59,7 @@ include_once('include/header.php');
                         <div class="form-password-toggle">
                             <label class="form-label" for="product_ratting">Product Ratting</label>
                             <div class="input-group input-group-merge">
-                                <input type="number" id="product_ratting" name="product_ratting" class="form-control" placeholder="3,5, 4.2, 5.3 like ">
+                                <input type="text" id="product_ratting" name="product_ratting" class="form-control" placeholder="3.5, 4.2, 5.3 like ">
                             </div>
                         </div>
                     </div>
@@ -74,7 +67,7 @@ include_once('include/header.php');
                         <div class="form-password-toggle">
                             <label class="form-label" for="product_rating_star">Product Rating Star</label>
                             <div class="input-group input-group-merge">
-                                <input type="number" id="product_rating_star" name="product_rating_star" class="form-control" placeholder="5,4,3,2 like  ">
+                                <input type="text" id="product_rating_star" name="product_rating_star" class="form-control" placeholder="5,4,3,2 like  ">
                             </div>
                         </div>
                     </div>
