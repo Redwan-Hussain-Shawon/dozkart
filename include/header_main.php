@@ -6,10 +6,9 @@
 ?>
 </head>
 <body>
-    <div class='loader-main  align-items-center justify-content-center position-fixed w-100 ' style='z-index: 10001;background:#e3e3e3f2;height:100vh;display:flex'>
+    <!-- <div class='loader-main  align-items-center justify-content-center position-fixed w-100 ' style='z-index: 10001;background:#e3e3e3f2;height:100vh;display:flex'>
         <span class="loader"></span>
-
-    </div>
+    </div> -->
 
     <div class="toast js align-items-center hide fixed-top justify-content-between bg-white border-0 " style="right: 50% !important;left:50%;top:10px;z-index:1000000;transform:translateX(-50%)" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">

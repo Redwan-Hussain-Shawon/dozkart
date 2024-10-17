@@ -63,7 +63,7 @@ if (isset($_POST['productSlug'])) {
 
         // Attempt to set the cart cookie
         if (setCartCookie($cartItem)) {
-            $response = ['status' => 'success', 'message' => 'Product added to cart.'];
+            $response = ['status' => 'success', 'message' => 'Product added to cart.','quantity'=>$quantity];
         } else {
             $response = [
                 'status' => 'error',
@@ -80,7 +80,6 @@ if (isset($_POST['productSlug'])) {
     // Send the JSON response
     echo json_encode($response);
 } else {
-    // Handle the case where productSlug is not set
     echo json_encode([
         'status' => 'error',
         'message' => 'Product slug is required.'

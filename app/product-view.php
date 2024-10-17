@@ -40,11 +40,11 @@ WHERE
 
                                     ?>
                                         <div class="product-gallery-preview-item" id="first">
-                                            <img src="<?php echo $img[0]['image_url'] ?>" alt="Product image" id='zoom_01' class='w-100 object-fit-contain view-zoom-img rounded-1 border zoomable-image' style="height: 430px;">
+                                            <img src="<?php  base_url('assets/upload/'.$img[0]['image_url'])  ?>" alt="Product image" id='zoom_01' class='w-100 object-fit-contain view-zoom-img rounded-1 border zoomable-image' style="height: 430px;">
                                         </div>
                                         <div class="d-flex align-items-center justify-content-center justify-content-lg-start gap-2 mt-2 flex-wrap">
                                             <?php foreach ($img as $mainImg) { ?>
-                                                <img src="<?php echo $mainImg['image_url'] ?>" style='width:60px;height:60px;' alt="Product image" class=' object-fit-contain border p-1 thumbnail pointer' />
+                                                <img src="<?php  base_url('assets/upload/'.$mainImg['image_url'])  ?> " style='width:60px;height:60px;' alt="Product image" class=' object-fit-contain border p-1 thumbnail pointer' />
                                             <?php } ?>
                                         </div>
                                     <?php } ?>
@@ -87,7 +87,7 @@ WHERE
                                                 <?php foreach ($productColor as $productColorData): ?>
                                                     <label>
                                                         <input type="radio" name="selectedImage" value="<?php echo $productColorData['color_name']; ?>" style="display: none;" />
-                                                        <img src="<?php echo $productColorData['color_image']; ?>" style="width:50px;height:50px" alt="Product image" class="object-fit-contain border p-1 thumbnail pointer selectable-image " data-toggle="tooltip" title="<?php echo $productColorData['color_name']; ?>" data-p-price=<?php echo $productColorData['color_price'] == null ? $mianValueProduct['product_price'] : $productColorData['color_price'] ?>
+                                                        <img src=" <?php base_url('assets/upload/'. $productColorData['color_image']) ; ?>" style="width:50px;height:50px" alt="Product image" class="object-fit-contain border p-1 thumbnail pointer selectable-image " data-toggle="tooltip" title="<?php echo $productColorData['color_name']; ?>" data-p-price=<?php echo $productColorData['color_price'] == null ? $mianValueProduct['product_price'] : $productColorData['color_price'] ?>
                                                         data-p-totalprice=<?php echo $productColorData['color_price'] == null ? $mianValueProduct['product_price']+$mianValueProduct['shipping_charge'] : $productColorData['color_price']+$mianValueProduct['shipping_charge']  ?>
                                                         />
                                                     </label>
@@ -99,7 +99,7 @@ WHERE
                                         </div>
                                     <?php endif; ?>
                                     <p class='text-danger d-none mb-3 fw-medium' id='color-error' style='margin-top: -8px;font-size:23px;'></p>
-                                   
+                                    <?php if($mianValueProduct['product_size']!==''){ ?>
                                         <div class='d-flex mb-3'>
                                             <h4 class='text-paragraph' style='font-size:14px;margin-right:33px'>Size</h4>
                                             <div class='d-flex gap-2 '>
@@ -116,6 +116,7 @@ WHERE
                                                
                                             </div>
                                         </div>
+                                        <?php } ?>
                                
 
 
@@ -156,22 +157,16 @@ WHERE
                                                 <td><?php echo $mianValueProduct['product_brand_name'] ?></td>
                                             </tr>
                                             <?php
-                                            $product_props = json_decode($mianValueProduct['product_props']);
+                                           $product_props = json_decode($mianValueProduct['product_props'], true);
                                             foreach ($product_props as $product_props_key => $product_props_data) {
                                             ?>
                                                 <tr>
-                                                    <th style='width:35%'><?php echo $product_props_key ?></th>
+                                                <th style='width:35%'><?php echo str_replace('_', ' ', $product_props_key); ?></th>
                                                     <td style='width:65%'><?php echo $product_props_data ?></td>
                                                 </tr>
                                             <?php } ?>
 
                                         </table>
-                                        <?php if (!empty($mianValueProduct['product_description'])) { ?>
-                                            <div class='d-flex align-items-start gap-2 my-3'>
-                                                <h3 class='h6 fw-semibold mb-0 mt-1 text-paragraph' style="font-size: 15px;">Description:</h3>
-                                                <p class='mb-0 f-14'><?php echo $mianValueProduct['product_description'] ?></p>
-                                            </div>
-                                        <?php } ?>
                                         <input type="hidden" name="asin" value="<?php echo $mianValueProduct['product_slug'] ?>" id="productSlug">
                                         <div class='d-flex align-items-center gap-2 mb-3'>
                                             <h3 class='h6 fw-semibold mb-0'>Shipping</h3>
@@ -193,7 +188,6 @@ WHERE
                                             </a>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -214,7 +208,7 @@ WHERE
                         </ul>
                         <div class="tab-content product-view-details mt-5" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-details">
-
+                            <?php echo $mianValueProduct['product_description'] ?>
                             </div>
 
                             <div class="tab-pane fade" id="pills-reviews"></div>

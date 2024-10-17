@@ -61,7 +61,7 @@ if ($resutl = $conn->query($sql)) {
     $sql1 = "SELECT * FROM products";
     $result2 = $conn->query($sql1);
        $data3= $result2->fetch_assoc();
-       $product_slug=$data3['product_slug'];
+       $product_slug='atomberg-zenova-mixer-grinder-with-unique-coarse-mode-advanced-safety-features-4-jars-including-unique-chopper-jar-with-hands-free-operation-pearl-white-596';
     while($data = $resutl->fetch_assoc()){
 
     ?>
@@ -70,8 +70,8 @@ if ($resutl = $conn->query($sql)) {
    >
                         <a href="<?php base_url('view-product/' . $product_slug) ?>">
                             <div class='shadow-sm rounded-1 h-100'>
-                                <div class="img overflow-hidden " style='border-radius:2px 2px 0 0'>
-                                    <img src="<?php echo $data['product_photo'] ?>" alt="" class="w-100 object-fit-contain" style='height: 240px;border-radius:2px 2px 0 0' id='<?php echo $data['asin'] ?>product-img'>
+                                <div class="img overflow-hidden " style='border-radius:2px 2px 0 0;background-image: url("<?php base_url('assets/img/default-image.png') ?>");height: 240px;background-repeat: no-repeat;background-position: center;background-size: 80%;' >
+                                    <img src="<?php echo $data['product_photo'] ?>" alt="" class="w-100 object-fit-cover" style='border-radius:2px 2px 0 0;height: 240px;' id='<?php echo $data['asin'] ?>product-img'>
                                 </div>
                                 <div class="p-2 text-left">
                                     <div class="d-flex align-items-end gap-2">

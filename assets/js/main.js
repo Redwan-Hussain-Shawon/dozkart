@@ -112,7 +112,7 @@ function loadCartItems() {
                       cartItemsContainer.innerHTML += `
                           <div class="cart-item d-flex mb-3 border p-3 shadow-sm bg-white rounded" id="main-${item.product_slug}">
                               <div class="cart-item-image me-3">
-                                  <img src="${item.image_url}" alt="Product Image" class='border' style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                                  <img src="${url+'assets/upload/'+item.image_url}" alt="Product Image" class='border' style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
                               </div>
                               <div class="cart-item-info flex-grow-1">
                                   <h6 class="mb-1 overflow-hidden" style='font-size:14px;line-height:22px;display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;'>${item.product_title}</h6>
@@ -185,7 +185,13 @@ const addToCart = (buynow='') => {
     success: function (response) {
       if (response.status === "success") {
         $(".loader-main").hide();
+        if(response.quantity){
+          var currentCount = parseInt($("#addtoCartCount").text());
+          $("#addtoCartCount").text(response.quantity);
+          console.log(response)
+        }
         alertFunction("success", "The product has been added to your cart");
+       
         $('#color-error').hide();
         if(buynow!==''){
           window.location.href = url + "checkout";

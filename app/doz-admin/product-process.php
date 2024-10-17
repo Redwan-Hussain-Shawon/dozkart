@@ -1,8 +1,10 @@
 <?php
+
 session_start();
 include_once('../../connect/conn.php');
 include_once('../../connect/base_url.php');
-include_once('include/helper.php'); // Assuming this contains the generateSlug function
+include_once('include/helper.php'); 
+
 
 // Sanitize input data
 $product_title = mysqli_real_escape_string($conn, trim($_POST['product_title']));
@@ -24,11 +26,12 @@ $product_slug = generateSlug($product_title . ' ' . rand(100, 777));
 $property_name = $_POST['property_name'];
 $property_value = $_POST['property_value'];
 $product_props = [];
-foreach($property_name as $key =>$name){
-    if(isset($property_value[$key])){
-        $product_props[$name] = $property_value[$key];
+foreach ($property_name as $key => $name) {
+    if (isset($property_value[$key])) {
+        $formatted_name = str_replace(' ', '_', trim($name)); 
+        $product_props[$formatted_name] = trim($property_value[$key]);
     }
-} 
+}
 $product_props = json_encode($product_props);
 
 

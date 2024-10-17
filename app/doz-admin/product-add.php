@@ -19,7 +19,8 @@ include_once('include/header.php');
                         <div class="form-password-toggle">
                             <label class="form-label" for="multicol-password">Product Category</label>
                             <div class="input-group input-group-merge">
-                                <select name="product_category" class="form-select" id="product_category">
+                                <select name="product_category" class="form-select" id="product_category" required>
+                                <option value="">Select a Category</option>
                                     <?php
                                     $sql = "SELECT * FROM product_category WHERE status=1";
                                     $result = $conn->query($sql);
@@ -32,18 +33,18 @@ include_once('include/header.php');
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-password-toggle">
+                        <div class="form-password-toggle" >
                             <label class="form-label" for="product_price">Product Price</label>
                             <div class="input-group input-group-merge">
-                                <input type="number" id="product_price" name="product_price" class="form-control" placeholder="product price" aria-describedby="multicol-confirm-password2">
+                                <input type="number" id="product_price" name="product_price" class="form-control" placeholder="product price" aria-describedby="multicol-confirm-password2" required>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-password-toggle">
+                        <div class="form-password-toggle" >
                             <label class="form-label" for="shipping_charge">Shipping Charge</label>
                             <div class="input-group input-group-merge">
-                                <input type="number" id="shipping_charge" name="shipping_charge" class="form-control" placeholder="shipping charge" aria-describedby="multicol-confirm-password2">
+                                <input type="number" id="shipping_charge" name="shipping_charge" class="form-control" placeholder="shipping charge" aria-describedby="multicol-confirm-password2" required>
                             </div>
                         </div>
                     </div>
@@ -55,11 +56,11 @@ include_once('include/header.php');
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" >
                         <div class="form-password-toggle">
                             <label class="form-label" for="product_ratting">Product Ratting</label>
                             <div class="input-group input-group-merge">
-                                <input type="text" id="product_ratting" name="product_ratting" class="form-control" placeholder="3.5, 4.2, 5.3 like ">
+                                <input type="text" id="product_ratting" name="product_ratting" required class="form-control" placeholder="3.5, 4.2, 5.3 like ">
                             </div>
                         </div>
                     </div>
@@ -67,7 +68,7 @@ include_once('include/header.php');
                         <div class="form-password-toggle">
                             <label class="form-label" for="product_rating_star">Product Rating Star</label>
                             <div class="input-group input-group-merge">
-                                <input type="text" id="product_rating_star" name="product_rating_star" class="form-control" placeholder="5,4,3,2 like  ">
+                                <input type="text" id="product_rating_star" name="product_rating_star" class="form-control" placeholder="5,4,3,2 like  " required>
                             </div>
                         </div>
                     </div>
@@ -75,7 +76,7 @@ include_once('include/header.php');
                         <div class="form-password-toggle">
                             <label class="form-label" for="product_rating_count">Product Rating Count</label>
                             <div class="input-group input-group-merge">
-                                <input type="number" id="product_rating_count" name="product_rating_count" class="form-control" placeholder="how many rating product">
+                                <input type="number" id="product_rating_count" name="product_rating_count" class="form-control" placeholder="how many rating product" required>
                             </div>
                         </div>
                     </div>
@@ -83,7 +84,7 @@ include_once('include/header.php');
                         <div class="form-password-toggle">
                             <label class="form-label" for="product_rating_count">Product Reviews</label>
                             <div class="input-group input-group-merge">
-                                <input type="number" id="product_reviews" name="product_reviews" class="form-control" placeholder="how many rating product">
+                                <input type="number" id="product_reviews" name="product_reviews" class="form-control" placeholder="how many rating product" required>
                             </div>
                         </div>
                     </div>
@@ -91,7 +92,7 @@ include_once('include/header.php');
                         <div class="form-password-toggle">
                             <label class="form-label" for="product_brand_name">Product Brand Name</label>
                             <div class="input-group input-group-merge">
-                                <input type="text" id="product_brand_name" name="product_brand_name" class="form-control" placeholder="product brand name">
+                                <input type="text" id="product_brand_name" name="product_brand_name" class="form-control" placeholder="product brand name" required>
                             </div>
                         </div>
                     </div>
@@ -99,7 +100,7 @@ include_once('include/header.php');
                         <div class="form-password-toggle">
                             <label class="form-label" for="website_name">Product Website Name</label>
                             <div class="input-group input-group-merge">
-                                <input type="text" id="website_name" name="website_name" class="form-control" placeholder="product website name">
+                                <input type="text" id="website_name" name="website_name" class="form-control" placeholder="product website name" required>
                             </div>
                         </div>
                     </div>
@@ -107,7 +108,7 @@ include_once('include/header.php');
                         <div class="form-password-toggle">
                             <label class="form-label" for="product_url_link">Product Live Url Link</label>
                             <div class="input-group input-group-merge">
-                                <input type="text" id="product_url_link" name="product_url_link" class="form-control" placeholder="product website name">
+                                <input type="text" id="product_url_link" name="product_url_link" class="form-control" placeholder="product website name" required>
                             </div>
                         </div>
                     </div>
@@ -115,7 +116,7 @@ include_once('include/header.php');
                         <div class="form-password-toggle">
                             <label class="form-label" for="product_url_link">Product Keyword</label>
                             <div class="input-group input-group-merge">
-                                <input type="text" id="keyword" name="keyword" class="form-control" placeholder="product keyword">
+                                <input type="text" id="keyword" name="keyword" class="form-control" placeholder="product keyword" required>
                             </div>
                         </div>
                     </div>
@@ -123,7 +124,7 @@ include_once('include/header.php');
                         <div class="form-password-toggle">
                             <label class="form-label" for="product_description">Product Description </label>
                             <div class="input-group input-group-merge">
-                                <textarea name="product_description" id="product_description" rows="5"></textarea>
+                                <textarea name="product_description" id="product_description" rows="5" ></textarea>
                             </div>
                         </div>
                     </div>
