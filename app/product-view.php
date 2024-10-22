@@ -6,7 +6,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     $slug = mysqli_real_escape_string($conn, trim($_GET['id']));
     $sql = "SELECT 
     p.*, 
-    pc.category_name 
+    pc.category_name,
+    pc.payment_advance 
 FROM 
     products p
 JOIN 
@@ -64,31 +65,26 @@ WHERE
                                     <div class="h4 fw-semibold text-accent py-2 mb-0" id='priceShow'>BDT <?php echo $mianValueProduct['product_price'] ?></div>
                                     <div class='d-flex align-items-center gap-2 mb-1'>
                                     <h3 class='fw-semibold mb-0 text-paragraph' style='font-size: 15px;'>Shipping Charge: </h3>
-                                    <p class='mb-0 f-15 fw-semibold'>BDT <?php echo $mianValueProduct['shipping_charge'] ?> </p>
+                                    <p class='mb-0 f-15 fw-semibold'>BDT <?php echo $mianValueProduct['shipping_charge'] ?> (All Bangladesh ) </p>
                                 </div>
                                 <div class='d-flex align-items-center gap-2 mb-3'>
                                     <h3 class='fw-semibold mb-0 ' style='font-size: 16px;' >Total Amount: </h3>
                                     <p class='mb-0 f-15 fw-semibold text-primary' id="totalPriceShow" style='font-size: 16px !important;'>BDT <?php echo $mianValueProduct['product_price']+$mianValueProduct['shipping_charge'] ?> </p>
                                 </div>
 
-                                    <a href='<?php echo $mianValueProduct['product_url_link'] ?>' target="_blank" class='d-inline-block mb-3 border py-1 hover-bg-gray' style='background-color:#f8f8f8 ;padding:4px 8px 4px 8px;border-radius:4px;font-size:14px'><?php echo $mianValueProduct['website_name'] ?> View
-                                        <svg fill="currentColor" height="16px" width="16px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                            viewBox="0 0 42 42" enable-background="new 0 0 42 42" xml:space="preserve">
-                                            <path d="M15.3,20.1c0,3.1,2.6,5.7,5.7,5.7s5.7-2.6,5.7-5.7s-2.6-5.7-5.7-5.7S15.3,17,15.3,20.1z M23.4,32.4
-	C30.1,30.9,40.5,22,40.5,22s-7.7-12-18-13.3c-0.6-0.1-2.6-0.1-3-0.1c-10,1-18,13.7-18,13.7s8.7,8.6,17,9.9
-	C19.4,32.6,22.4,32.6,23.4,32.4z M11.1,20.7c0-5.2,4.4-9.4,9.9-9.4s9.9,4.2,9.9,9.4S26.5,30,21,30S11.1,25.8,11.1,20.7z" />
-                                        </svg>
-                                    </a>
+                                  
                                     <?php if ($productColor = productColor($slug, $conn)): ?>
                                         <div class='d-flex mb-3'>
                                             <h4 class='text-paragraph' style='font-size:14px;margin-right:20px'>Color</h4>
 
                                             <div class='d-flex gap-2 '>
-                                                <?php foreach ($productColor as $productColorData): ?>
+                                                <?php foreach ($productColor as $productColorData): 
+                                                    ?>
                                                     <label>
                                                         <input type="radio" name="selectedImage" value="<?php echo $productColorData['color_name']; ?>" style="display: none;" />
                                                         <img src=" <?php base_url('assets/upload/'. $productColorData['color_image']) ; ?>" style="width:50px;height:50px" alt="Product image" class="object-fit-contain border p-1 thumbnail pointer selectable-image " data-toggle="tooltip" title="<?php echo $productColorData['color_name']; ?>" data-p-price=<?php echo $productColorData['color_price'] == null ? $mianValueProduct['product_price'] : $productColorData['color_price'] ?>
                                                         data-p-totalprice=<?php echo $productColorData['color_price'] == null ? $mianValueProduct['product_price']+$mianValueProduct['shipping_charge'] : $productColorData['color_price']+$mianValueProduct['shipping_charge']  ?>
+                                                        data-colorid=<?= $productColorData['color_id'] ?>
                                                         />
                                                     </label>
                                                 <?php endforeach;
@@ -98,6 +94,7 @@ WHERE
 
                                         </div>
                                     <?php endif; ?>
+                                    <input type="hidden" id="product_color_id" value="null">
                                     <p class='text-danger d-none mb-3 fw-medium' id='color-error' style='margin-top: -8px;font-size:23px;'></p>
                                     <?php if($mianValueProduct['product_size']!==''){ ?>
                                         <div class='d-flex mb-3'>
@@ -206,7 +203,7 @@ WHERE
                                 <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-reviews" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Reviews</button>
                             </li>
                         </ul>
-                        <div class="tab-content product-view-details mt-5" id="pills-tabContent">
+                        <div class="tab-content product-view-details mt-4" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-details">
                             <?php echo $mianValueProduct['product_description'] ?>
                             </div>

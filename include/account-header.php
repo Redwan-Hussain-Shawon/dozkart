@@ -44,7 +44,7 @@ if ($result_header = $conn->query($sql_header)) {
             </div>
             <div class="offcanvas-body flex-column">
                 <div class='d-flex flex-column gap-2 align-items-center mt-3'>
-                    <img src="<?php echo $data_header['image_url'] == null ? base_url('assets/img/avatar-place.png'): $data_header['image_url']; ?>" alt="" width='64px' height='64px' class='rounded-circle'>
+                    <img src="<?php  base_url('assets/img/avatar-place.png') ?>" alt="" width='64px' height='64px' class='rounded-circle'>
                     <div class="d-flex align-items-center mt-2 gap-1">
                         <span class="fw-semibold h6 mb-0 text-black">Balance: </span>
                         <a href="#"><span class="text-primary fw-semibold">0.00</span></a>

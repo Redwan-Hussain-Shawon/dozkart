@@ -36,7 +36,14 @@ if (isset($_SERVER['HTTP_REFERER']) && str_contains($_SERVER['HTTP_REFERER'], 'h
                 ];
                 $jwt = JWT::encode($payload,JWT_SECRET_KEY,'HS256');
                 $_SESSION['sh_user'] = $jwt;
-                redirect('dashboard'); 
+                if(isset($_SESSION['redrict_url'])){
+                    $redrict_url = $_SESSION['redrict_url'];
+                    unset($_SESSION['redrict_url']);
+                    redirect($redrict_url); 
+                }else{
+                    redirect('dashboard'); 
+                }
+              
             }else{
                 $sql = "INSERT INTO user(name,email,image_url)VALUES('$name','$email','$img_url')";
                 if($conn->query($sql)){

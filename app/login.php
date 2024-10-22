@@ -6,6 +6,7 @@
     }
     include('../include/googleClient.php');
     include('../include/facebookClient.php');
+   
     
 $permissions = ['email']; // optional
 $loginUrl = $helper->getLoginUrl(FACEBOOK_REDIRECT_URI, $permissions);

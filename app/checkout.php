@@ -1,27 +1,45 @@
 <?php include_once('../connect/base_url.php');
-if (isset($_POST['buy_now'])) {
+
+if(isset($_GET['id'])){
     define('MYSITE', true);
     include_once('../include/helper.php');
-    protected_area();
+    // protected_area();
+    if(!is_logged_in()){
+        header('location:'.base_url1('login'));
+        $_SESSION['redrict_url']='checkout/prestige-500-watts-orion-mixer-grinder-with-3-stainless-steel-jars-2-years-warranty-red-white-694';
+    }
     include_once('../connect/conn.php');
-    $color = mysqli_real_escape_string($conn, trim($_POST['color']));
-    $size = mysqli_real_escape_string($conn, trim($_POST['size']));
-    $asin = mysqli_real_escape_string($conn, $_POST['asin']);
-    $qunty = mysqli_real_escape_string($conn, $_POST['qunty']);
-    $sql = "SELECT * FROM product_main WHERE asin ='$asin'";
-    $resutl = $conn->query($sql);
-    if ($resutl->num_rows > 0) {
-        $row = $resutl->fetch_assoc();
-         if(preg_replace('/₹/','',$row['product_minimum_offer_price']) < 100){
-            alert('danger','The price of this product is too low. Please choose a product priced at 100 taka or more.');
-            header('Location:'.base_url1('home'));
-            exit();
-        }
-?>
-        <?php include_once('../include/header.php') ?>
-        <?php include_once('../include/header_main.php');
 
-        ?>
+    $carts = json_decode($_COOKIE['cart']);
+    $slug_id = mysqli_real_escape_string($conn,trim($_GET['id']));
+  
+    $productColor;
+    $productSize;
+    $product_price;
+    $quantity;
+    $productColorId;
+    $shipping_charge;
+    foreach($carts as $cart){
+        if($slug_id  == $cart->product_slug){
+            $productColor = $cart->productColor;
+            $productSize = $cart->productSize;
+            $product_price = $cart->product_price;
+            $quantity = $cart->quantity;
+            $productColorId = $cart->productColorId;
+            $shipping_charge = $cart->shipping_charge;
+    
+            $sql = "SELECT p.*, pi.image_url,pc.payment_advance
+            FROM products p 
+            JOIN product_image pi ON p.product_slug = pi.product_slug 
+            JOIN product_category pc ON p.product_category=pc.category_slug
+            WHERE p.product_slug='$slug_id'";
+            $mainData = $conn->query($sql)->fetch_assoc();
+   
+
+?>
+ <?php include_once('../include/header.php') ?>
+ <?php include_once('../include/header_main.php');?>
+
         <section class='my-5 px-2'>
             <div class="container">
             <form action="<?php base_url('payment') ?>" method="post" id="checkoutForm" class="row gy-5">
@@ -48,9 +66,10 @@ if (isset($_POST['buy_now'])) {
                                     <div class="modal-content" style='height:fit-content'>
                                         <div class="modal-header d-flex align-items-center gap-3 border-0">
                                             <h2 class="modal-title fs-5">Delivery address</h2>
-                                            <a href="<?php base_url('create-address?id=cart') ?>" class='text-primary fw-medium h5 mb-0'>+ Create Address</a>
+                                            <a href="<?php base_url('create-address?id=checkout/'.$slug_id) ?>" class='text-primary fw-medium h5 mb-0'>+ Create Address</a>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
+                                    
                                         <div class="modal-body px-md-4 px-1">
                                             <?php
                                             $user_id = getId();
@@ -59,6 +78,7 @@ if (isset($_POST['buy_now'])) {
                                                 if ($result->num_rows > 0) {
                                             ?>
                                                     <div class=''>
+                                                        <input type="hidden" name="productColorId" value="<?= $productColorId ?>">
                                                         <div class="d-flex align-items-center px-2 border-bottom">
                                                             <p style='width: 50%;'>Name/Phone/Email</p>
                                                             <p style='width: 50%;' class='text-center text-md-start'>Address</p>
@@ -96,54 +116,64 @@ if (isset($_POST['buy_now'])) {
                         </div>
                         
                         <div class='border mt-3 mt-md-5' style='border-radius: 2px;'>
+                            <input type="hidden" name="product_slug" value="<?= $slug_id ?>">
                             <div class='bg-light py-2 px-3'>
                                 <h5 class='h6 fw-medium mb-0'>Product </h5>
                             </div>
                             <div class='d-flex gap-3 p-3'>
                                <div>
-                               <img src="<?php echo $row['product_photo'] ?>" width="80" height="80" alt="">
+                               <img src="<?php base_url('assets/upload/'.$mainData['image_url']) ?>" width="80" height="80" alt="">
                                </div>
                                 <div class='d-flex flex-column'>
-                                    <h3 style="font-size: 19px;" class='mb-1'><?php echo $row['product_title'] ?></h3>
-                                    <p class='d-flex align-items-center gap-1 mb-0'><span class='text-black fw-medium'>Properties: </span><?php echo $color ?> | <?php echo $size ?></p>
-                                    <p class='d-flex align-items-center gap-1 mb-0'><span class='text-black fw-medium'>Product Star Rating :</span><?php echo $row['product_star_rating'] ?></p>  
-                                     <p class='d-flex align-items-center gap-1 mb-0'><span class='text-black fw-medium'>Quantity :</span><?php echo $qunty ?></p>
-                                    <h4 class="fw-bold text-primary mt-2" style='font-size: 18px;'><?php echo takaConvertInto($row['product_minimum_offer_price'],$qunty) ?></h4>
+                                    <h3 style="font-size: 19px;" class='mb-1'><?= $mainData['product_title'] ?></h3>
+                                    <p class='d-flex align-items-center gap-1 mb-0'><span class='text-black fw-medium'>Properties: </span><?= $productColor !== ''? $productColor:'' ?> | <?= $productSize !== ''? $productSize:'' ?></p>
+                                    <p class='d-flex align-items-center gap-1 mb-0'><span class='text-black fw-medium'>Quantity :</span><?= $quantity ?></p>
+                    
+                                
+                                    <h4 class="fw-bold text-primary mt-1" style='font-size: 18px;'>BDT <?= $product_price ?></h4>
+                                    <input type="hidden" name="quantity" value="<?= $quantity ?>">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class='d-flex justify-content-between p-2 border-bottom gap-2 ' id='main-<?php echo $data['product_id'] ?>'>
-
                     </div>
                 </div>
                 <div class="mt-2 mt-md-4">
                     <label for="color" class="form-label text-black fw-semibold">Additional Instructions:</label>
                     <textarea name="instructions" id="" class="form-control border-primary" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
                 </div>
-                <input type="hidden" name="qunty" value="<?php echo $_POST['qunty'] ?>">
-                <input type="hidden" name="color" value="<?php echo $_POST['color'] ?>">
-                <input type="hidden" name="size" value="<?php echo $_POST['size'] ?>">
-                <input type="hidden" name="asin" value="<?php echo $_POST['asin'] ?>">
+
             </div>
             <div class="col-lg-4">
                     <div class='shadow rounded-1 p-3' style='max-width: 400px;'>
                         <h4 class='h5 fw-semibold mb-3'>Order Summary</h4>
                         <div class='d-flex justify-content-between my-2'>
-                            <p style='font-size: 16px;' class='text-paragraph mb-0'>Subtotal (<?php echo $qunty ?> Items)</p>
-                            <span class='h6 fw-semibold'><?php echo takaConvertInto($row['product_minimum_offer_price'],$qunty) ?></span>
+                            <p style='font-size: 16px;' class='text-paragraph mb-0'>Subtotal (<?= $quantity ?> Items)</p>
+                            <span class='h6 fw-semibold'>BDT <?= $product_price * $quantity  ?></span>
+                        </div>
+                        <div class='d-flex justify-content-between my-2'>
+                            <p style='font-size: 16px;' class='text-paragraph mb-0'>Shipping Charge </p>
+                            <span class='h6 fw-semibold'>BDT <?= $mainData['shipping_charge'] * $quantity  ?></span>
                         </div>
                         <div class='d-flex justify-content-between my-2'>
                             <p style='font-size: 16px;' class='text-light fw-semibold mb-0'>Total</p>
-                            <span class='h6 fw-semibold text-primary'><?php echo takaConvertInto($row['product_minimum_offer_price'],$qunty) ?></span>
+                            <span class='h6 fw-semibold text-primary'>BDT <?= $product_price * $quantity + $mainData['shipping_charge'] ?></span>
                         </div>
+                        <div class='d-flex justify-content-between my-2'>
+                        <p style='font-size: 16px;' class='text-light fw-semibold mb-0'>Advance Payment (<?= $mainData['payment_advance'] ?>%)</p>
+                        <span class='h6 fw-semibold text-primary'>
+        BDT <?= calculateAdvancePayment(($product_price  + $mainData['shipping_charge'])* $quantity,$mainData['payment_advance']) ?>
+    </span>
+</div>
                         <div class='mb-3'>
                             <label for="" class="mb-2 form-label">Select payment method:</label>
                             <select name="" id="" class='form-select'>
-                                <option value="Online Full">Online Full</option>
+                                <option value="Online Full">Online <?= $mainData['payment_advance'] ?>%</option>
                             </select>
                         </div>
                         <input type="hidden" name="addressid">
+                        
                        
                         <div class="d-flex gap-2" required>
                             <input type="checkbox" name="accept_agreement" id="accept_agreement" class="form-check-input text-primary" required>
@@ -158,10 +188,11 @@ if (isset($_POST['buy_now'])) {
         </section>
 
 <?php
+  }
+}
+
+}else{
+    header('Location:404.php');
+}
         include_once('../include/footer.php');
-    } else {
-        // header('location:' . base_url1('404.php'));
-    }
-} else {
-    // header('location:' . base_url1('404.php'));
-} ?>
+ ?>

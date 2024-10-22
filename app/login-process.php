@@ -33,7 +33,14 @@ if (isset($_POST['submit_login'])) {
                 ];
                 $jwt = JWT::encode($payload,JWT_SECRET_KEY,'HS256');
                 $_SESSION['sh_user'] = $jwt;
-                header('Location:dashboard');
+                if(isset($_SESSION['redrict_url'])){
+                    $redrict_url = $_SESSION['redrict_url'];
+                    unset($_SESSION['redrict_url']);
+                    redirect($redrict_url); 
+                }else{
+                    header('Location:dashboard');
+                }
+                
             } else {
                 $_SESSION['form']['error']['password']=$password;
                 $_SESSION['form']['email'] = $email;

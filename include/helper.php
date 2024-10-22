@@ -60,6 +60,10 @@ function formError($field)
 }
 
 
+function calculateAdvancePayment($totalAmount, $percentage=25) {
+    $advancePayment = $totalAmount * ($percentage / 100);
+    return floor($advancePayment);
+}
 
 
 function logout()
@@ -77,7 +81,7 @@ function protected_area()
     
     if (!isset($_SESSION['sh_user']) && empty($_SESSION['sh_user'])) {
         alert('danger', 'Unauthorized access, Login before you proceed');
-        header('Location:login');
+        header('Location:'.base_url1('login'));
         die();
     }
 }

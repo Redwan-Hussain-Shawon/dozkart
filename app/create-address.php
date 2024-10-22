@@ -13,8 +13,8 @@ if ($result = $conn->query($sql)) {
 
         $data = $result->fetch_assoc();
 
-        if(isset($_GET['id']) && $_GET['id'] == 'cart'){
-            $_SESSION['redirect_url'] = 'cart';
+        if(isset($_GET['id'])){
+            $_SESSION['redirect_url'] = $_GET['id'];
         }
 ?>
         <section class='my-5 px-2'>
@@ -54,7 +54,6 @@ if ($result = $conn->query($sql)) {
                                 <div class="col-md-6">
                                     <label for="coundistricttry" class='form-label'>District <span class='text-red'>*</span></label>
                                     <select name="district" id="district" class='form-select mb-4' required>
-                                        <option value="" class=''>Select</option>
                                         <option value="">Select District</option>
                                         <option value="Bagerhat">Bagerhat</option>
                                         <option value="Bandarban">Bandarban</option>

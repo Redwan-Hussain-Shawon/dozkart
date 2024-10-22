@@ -40,6 +40,7 @@ if (isset($_POST['productSlug'])) {
     $product_slug = mysqli_real_escape_string($conn, $_POST['productSlug']);
     $productColor = mysqli_real_escape_string($conn, $_POST['productColor']);
     $productSize = mysqli_real_escape_string($conn, $_POST['productSize']);
+    $productColorId = mysqli_real_escape_string($conn, $_POST['productColorId']);
     $quantity = isset($_POST['productQuantity']) ? (int)$_POST['productQuantity'] : 1; // Default to 1 if quantity is not set
 
     // Query to fetch product details
@@ -49,21 +50,31 @@ if (isset($_POST['productSlug'])) {
     if ($result && $result->num_rows > 0) {
         // Fetch the product data
         $productData = $result->fetch_assoc();
+        $product_price = $productData['product_price'];
+        if($productColorId != 'null'){
+            $sql1 = "SELECT * FROM product_color WHERE color_id=$productColorId";
+            $result1 = $conn->query($sql1);
+            $data1 = $result1->fetch_assoc();
+            $product_price = $data1['color_price'];
+        }
 
         // Prepare the cart item with the fetched details
         $cartItem = array(
             'product_slug' => $product_slug,
             'product_title' => $productData['product_title'], 
-            'product_price' => $productData['product_price'], 
+            'product_price' => $product_price, 
             'productColor' => $productColor,
             'productSize' => $productSize,
             'quantity' => $quantity,
+            'productColorId' => $productColorId,
             'shipping_charge' => $productData['shipping_charge']
         );
 
         // Attempt to set the cart cookie
         if (setCartCookie($cartItem)) {
-            $response = ['status' => 'success', 'message' => 'Product added to cart.','quantity'=>$quantity];
+            $cartData = json_decode($_COOKIE['cart'], true);
+            $cartLength = count($cartData);
+            $response = ['status' => 'success', 'message' => 'Product added to cart.','quantity'=>$cartLength+1];
         } else {
             $response = [
                 'status' => 'error',

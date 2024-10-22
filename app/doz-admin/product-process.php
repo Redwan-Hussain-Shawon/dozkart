@@ -10,7 +10,6 @@ include_once('include/helper.php');
 $product_title = mysqli_real_escape_string($conn, trim($_POST['product_title']));
 $product_category = mysqli_real_escape_string($conn, trim($_POST['product_category']));
 $product_price = mysqli_real_escape_string($conn, trim($_POST['product_price']));
-$shipping_charge = mysqli_real_escape_string($conn, trim($_POST['shipping_charge']));
 $product_size = mysqli_real_escape_string($conn, trim($_POST['product_size']));
 $product_ratting = mysqli_real_escape_string($conn, trim($_POST['product_ratting']));
 $product_rating_star = mysqli_real_escape_string($conn, trim($_POST['product_rating_star']));
@@ -39,7 +38,6 @@ $sql = "INSERT INTO products (
     product_title, 
     product_category, 
     product_price, 
-    shipping_charge, 
     product_size, 
     product_ratting, 
     product_rating_star, 
@@ -56,7 +54,6 @@ $sql = "INSERT INTO products (
     '$product_title', 
     '$product_category', 
     '$product_price', 
-    '$shipping_charge', 
     '$product_size', 
     '$product_ratting', 
     '$product_rating_star', 
@@ -129,6 +126,6 @@ if(isset($_POST['size_name'])){
 }
 
 alert('success',' Your product has been uploaded successfully.');
-header('location:product-add');
+header('location:show-product');
 exit();
 }

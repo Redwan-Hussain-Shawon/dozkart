@@ -1,24 +1,40 @@
 <?php
 include_once("../connect/base_url.php");
+include_once("../vendor/autoload.php");
 define('MYSITE', true);
 include_once('../include/helper.php');
-if (isset($_POST['checkout_submit'])) {
+if (isset($_POST['checkout_submit'])) {  
 	if ($_SESSION['sh_user']) {
-		 $_SESSION['sh_user'];
 		include_once("../connect/conn.php");
+		$user_id = getId();
 		$addressId = mysqli_real_escape_string($conn,$_POST['addressid']);
-		$color = mysqli_real_escape_string($conn,$_POST['color']);
-		$qunty = mysqli_real_escape_string($conn,$_POST['qunty']);
-		$size = mysqli_real_escape_string($conn,$_POST['size']);
+		$productColorId = mysqli_real_escape_string($conn,$_POST['productColorId']);
+		$product_slug = mysqli_real_escape_string($conn,$_POST['product_slug']);
 		$instructions = mysqli_real_escape_string($conn,$_POST['instructions']);
-		$asin = mysqli_real_escape_string($conn,$_POST['asin']);
-		$sql ="SELECT product_minimum_offer_price FROM product_main WHERE asin='$asin'";
+		$qunty = mysqli_real_escape_string($conn,$_POST['quantity']);
+
+		$sql ="SELECT p.*,pc.payment_advance
+		FROM products p
+		JOIN product_category pc ON p.product_category=pc.category_slug
+		WHERE product_slug='$product_slug'";
 		$result = $conn->query($sql);
-		$data = $result->fetch_array();
-		$amaunt = takaConvertF($data['product_minimum_offer_price'],$qunty);
+		if($result->num_rows>0){
+		$data = $result->fetch_assoc();
+		echo '<pre>';
+		print_r($data);
+		echo '</pre>';
+		$amaunt = calculateAdvancePayment(($data['product_price']+$data['shipping_charge'])*$qunty,$data['payment_advance']);
+		if($productColorId != 'null'){
+			$sql1 = "SELECT color_price FROM product_color WHERE color_id =$productColorId";
+			$result1 = $conn->query($sql1);
+			$amaunt = calculateAdvancePayment(($result1->fetch_assoc()['color_price']+$data['shipping_charge'])*$qunty,$data['payment_advance']) ;
+		}
+		echo $amaunt;
+		exit;
+		
 		$data_jsone = ['asin'=>$asin,'value_e'=>$qunty,'value_f'=>$size,'value_g'=>$instructions];
 		$product = $_POST['asin'];
-		$user_id = $_SESSION['sh_user'];
+	
 		$check_sql = "INSERT INTO orders(user_id,product_id,address_id,product_qunty,product_size,product_color,instruction)VALUES($user_id,'$product',$addressId,'$qunty','$size','$color','$instructions')";
 		$check_result = $conn->query($check_sql);
 		if ($check_result) {
@@ -137,8 +153,10 @@ if (isset($_POST['checkout_submit'])) {
 
 
 	} else {
+		alert('danger','this data not avaible');
 		header('location:' . base_url1('404.php'));
 	}
+}
 	
 }else{
 	header('location:' . base_url1('404.php'));

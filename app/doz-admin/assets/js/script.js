@@ -80,38 +80,55 @@ $(document).ready(function () {
 productColorGenerator();
 
 
-function productSizeGenerator(){
-        const newRow = $('<div class="row mt-2">')
-            .append(
-                $('<div class="col-md-4">').append(
-                    $('<input>', {
-                        type: 'text',
-                        class: 'form-control',
-                        placeholder: 'Size Name',
-                        name: 'size_name[]'
-                    })
-                ),
-                $('<div class="col-md-4">').append(
-                    $('<input>', {
-                        type: 'text',
-                        class: 'form-control',
-                        placeholder: 'Size View Link',
-                        name: 'size_click_view_url[]'
-                    })
-                ),
-                $('<div class="col-md-4 mt-2">').append(
-                    $('<button>', {
-                        text: 'Delete',
-                        type: 'button',
-                        class: 'btn btn-danger btn-sm delete-button'
-                    }).click(function() {
-                        newRow.remove();
-                    })
-                )
-            );
+function productSizeGenerator() {
+  const newRow = $('<div class="row mt-2">');
 
-        $('#product-size').append(newRow);
+  // Conditionally add the hidden input field for size_id[]
+  if ($('#size_id')) {
+      newRow.append(
+          $('<input>', {
+              type: 'hidden',
+              name: 'size_id[]',
+              value: 'size_insert'
+          })
+      );
+  }
+
+  newRow.append(
+      // Size Name input
+      $('<div class="col-md-4">').append(
+          $('<input>', {
+              type: 'text',
+              class: 'form-control',
+              placeholder: 'Size Name',
+              name: 'size_name[]'
+          })
+      ),
+      // Size View Link input
+      $('<div class="col-md-4">').append(
+          $('<input>', {
+              type: 'text',
+              class: 'form-control',
+              placeholder: 'Size View Link',
+              name: 'size_click_view_url[]'
+          })
+      ),
+      // Delete button
+      $('<div class="col-md-4 mt-2">').append(
+          $('<button>', {
+              text: 'Delete',
+              type: 'button',
+              class: 'btn btn-danger btn-sm delete-button'
+          }).click(function() {
+              newRow.remove();  // Remove the row when delete is clicked
+          })
+      )
+  );
+
+  // Append the new row to the product-size container
+  $('#product-size').append(newRow);
 }
+
 
 $('#product-size-trigger').click(function() {
     productSizeGenerator();
@@ -126,6 +143,7 @@ productPropsGenerator();
 
     function productPropsGenerator(){
     const newRow = $('<div class="row mb-2">')
+    
         .append(
             $('<div class="col-md-5">').append(
                 $('<input>', {
@@ -153,6 +171,7 @@ productPropsGenerator();
                     newRow.remove();
                 })
             )
+            
         );
 
     $('#product-props').append(newRow);

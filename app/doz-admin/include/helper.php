@@ -16,4 +16,13 @@ function generateSlug($string) {
     return $slug;
 }
 
+function shortenText($text, $maxLength) {
+    if (strlen($text) > $maxLength) {
+        return substr($text, 0, $maxLength - 3) . '...';
+    }
+    return $text;
+}
+
+
+
 ?>

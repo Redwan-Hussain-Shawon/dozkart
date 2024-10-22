@@ -29,7 +29,7 @@ if (isset($_COOKIE['cart'])) {
                 $cart_items[] = [
                     'product_slug' => $data_main['product_slug'],
                     'product_title' => $data_main['product_title'],
-                    'product_price' => $data_main['product_price'],
+                    'product_price' =>$item['product_price'],
                     'shipping_charge' => $data_main['shipping_charge'],
                     'quantity' => $item['quantity'], 
                     'image_url' => $data_main['image_url'],

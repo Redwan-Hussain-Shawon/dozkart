@@ -108,7 +108,7 @@ function loadCartItems() {
             console.log(response)
               if (response.length > 0) {
                   response.forEach(item => {
-                      const totalPrice = (parseInt(item.product_price) + parseInt(item.shipping_charge)) * parseInt(item.quantity);
+                      const totalPrice = (parseInt(item.product_price)  * parseInt(item.quantity));
                       cartItemsContainer.innerHTML += `
                           <div class="cart-item d-flex mb-3 border p-3 shadow-sm bg-white rounded" id="main-${item.product_slug}">
                               <div class="cart-item-image me-3">
@@ -118,9 +118,9 @@ function loadCartItems() {
                                   <h6 class="mb-1 overflow-hidden" style='font-size:14px;line-height:22px;display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;'>${item.product_title}</h6>
                                   <span class="d-block text-primary fw-bold"  id='price'>BDT ${totalPrice}</span>
                                   <div class="cart-item-actions d-flex align-items-center mt-1 border" style="width: fit-content;border-radius: 2px;">
-                                      <button class="btn btn-outline-secondary btn-sm me-2" onclick="addToCarUpDown('${item.product_slug}',-1,${(parseInt(item.product_price) + parseInt(item.shipping_charge))},this)">-</button>
+                                      <button class="btn btn-outline-secondary btn-sm me-2" onclick="addToCarUpDown('${item.product_slug}',-1,${(parseInt(item.product_price) )},this)">-</button>
                                       <span id="itemQuantity" class="mx-2">${item.quantity}</span>
-                                      <button class="btn btn-outline-secondary btn-sm ms-2" onclick="addToCarUpDown('${item.product_slug}',1,${(parseInt(item.product_price) + parseInt(item.shipping_charge))},this)">+</button>
+                                      <button class="btn btn-outline-secondary btn-sm ms-2" onclick="addToCarUpDown('${item.product_slug}',1,${(parseInt(item.product_price))},this)">+</button>
                                   </div>
                               </div>
                               <div class="ms-3 text-end flex-column d-flex align-items-end" style='min-width:80px'>
@@ -129,7 +129,7 @@ function loadCartItems() {
                                           <path d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4V4zm2 2h6V4H9v2zM6.074 8l.857 12H17.07l.857-12H6.074zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1z" fill="#FFFFFF"/>
                                       </svg>
                                   </button>
-                                  <a href="#" class="btn btn-primary btn-sm mt-2" style="color:white !important" onclick="removeItem()">Buy Now</a>
+                                  <a href="${url}checkout/${item.product_slug}" class="btn btn-primary btn-sm mt-2" style="color:white !important" >Buy Now</a>
                               </div>
                           </div>
                       `;
@@ -173,6 +173,7 @@ const addToCart = (buynow='') => {
   let productSlug = $.trim($("#productSlug").val());
   let productSize = $.trim($("#size").val());
   let productQuantity = $.trim($("#quantity").val());
+  let productColorId = $.trim($("#product_color_id").val());
   $.ajax({
     url: url + "api/add-to-cart.php",
     method: "POST",
@@ -181,20 +182,23 @@ const addToCart = (buynow='') => {
       productColor: productColor,
       productSize: productSize,
       productQuantity: productQuantity,
+      productColorId: productColorId,
     },
     success: function (response) {
       if (response.status === "success") {
         $(".loader-main").hide();
         if(response.quantity){
           var currentCount = parseInt($("#addtoCartCount").text());
-          $("#addtoCartCount").text(response.quantity);
-          console.log(response)
+          $("#addtoCartCount").html(response.quantity);
+          console.log(response.quantity)
+        }else{
+          console.log('ok')
         }
         alertFunction("success", "The product has been added to your cart");
        
         $('#color-error').hide();
         if(buynow!==''){
-          window.location.href = url + "checkout";
+          window.location.href = url + "checkout/"+productSlug;
         }else{
           loadCartItems();
           var cartOffcanvas = new bootstrap.Offcanvas(document.getElementById('cartOffcanvas'));
@@ -213,7 +217,7 @@ const addToCart = (buynow='') => {
             "This product is already added to your cart."
           );
           if(buynow!==''){
-            window.location.href = url + "checkout";
+            window.location.href = url + "checkout/"+productSlug;
           }
         }
       }
@@ -432,6 +436,7 @@ $('.selectable-image').on("click",function(){
 
   $('#priceShow').html('BDT '+ $(this).data('p-price'));
   $('#totalPriceShow').html('BDT '+ $(this).data('p-totalprice'));
+  $('#product_color_id').val($(this).data('colorid'));
 })
 
 

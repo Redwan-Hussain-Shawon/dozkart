@@ -58,7 +58,7 @@ include_once('include/header.php');
                     </div>
                     <div class="col-md-6">
                         <label class="form-label" for="payment_advance">Advance Payment</label>
-                        <input type="text" id="payment_advance" class="form-control" placeholder="advance payment" name="payment_advance" required>
+                        <input type="text" id="payment_advance"  pattern="[^%]*" title="Percentage symbol (%) is not allowed." class="form-control" placeholder="advance payment" name="payment_advance" required>
                     </div>
                  
                 </div>
@@ -93,7 +93,7 @@ $result = $conn->query($sql);
           <td><?php echo $data['category_id'] ?></td>
           <td><?php echo $data['category_name'] ?></td>
           <td><?php echo $data['category_slug'] ?></td>
-          <td><?php echo $data['payment_advance'] ?></td>
+          <td><?php echo $data['payment_advance'] ?>%</td>
           <td><?php if($data['status']==1){ ?>
             <span class="badge bg-label-primary me-1">Active</span>
           <?php }else{
