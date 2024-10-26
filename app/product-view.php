@@ -21,6 +21,7 @@ WHERE
 
             define('MYSITE', true);
             include_once('../include/header.php') ?>
+           
 
             <?php include_once('../include/header_main.php') ?>
             <style>
@@ -40,7 +41,7 @@ WHERE
                                     <?php if ($img = productImage($slug, $conn)) {
 
                                     ?>
-                                        <div class="product-gallery-preview-item" id="first">
+                                        <div class="product-gallery-preview-item img-container" id="first" >
                                             <img src="<?php  base_url('assets/upload/'.$img[0]['image_url'])  ?>" alt="Product image" id='zoom_01' class='w-100 object-fit-contain view-zoom-img rounded-1 border zoomable-image' style="height: 430px;">
                                         </div>
                                         <div class="d-flex align-items-center justify-content-center justify-content-lg-start gap-2 mt-2 flex-wrap">
@@ -229,20 +230,10 @@ WHERE
                 }
             }
             ?>
-            <script src="<?php base_url('assets/js/zoom.js') ?>"></script>
-
-
-            <script>
+           
+           <script>
                 $(document).ready(function() {
-
-                    $('#zoom_01').elevateZoom({
-                        zoomType: "lens", // or "inner" or "window"
-                        lensShape: "round",
-                        lensSize: 200,
-                        responsive: true,
-                        zoomWindowWidth: 400, // Width of the zoom window
-                        zoomWindowHeight: 400, // Height of the zoom window
-                    });
+                 
 
                     $('.thumbnail').click(function() {
                         var newSrc = $(this).attr('src');
@@ -252,12 +243,7 @@ WHERE
 
                         $('#zoom_01').attr('src', newSrc);
 
-                        $('#zoom_01').elevateZoom({
-                            zoomType: "lens",
-                            lensShape: "round",
-                            lensSize: 200,
-                            responsive: true,
-                        });
+                       
                     });
                 });
             </script>

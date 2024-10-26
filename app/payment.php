@@ -20,39 +20,34 @@ if (isset($_POST['checkout_submit'])) {
 		$result = $conn->query($sql);
 		if($result->num_rows>0){
 		$data = $result->fetch_assoc();
-		echo '<pre>';
-		print_r($data);
-		echo '</pre>';
 		$amaunt = calculateAdvancePayment(($data['product_price']+$data['shipping_charge'])*$qunty,$data['payment_advance']);
+		$originalPayment=($data['product_price']+$data['shipping_charge'])*$qunty;
 		if($productColorId != 'null'){
 			$sql1 = "SELECT color_price FROM product_color WHERE color_id =$productColorId";
 			$result1 = $conn->query($sql1);
-			$amaunt = calculateAdvancePayment(($result1->fetch_assoc()['color_price']+$data['shipping_charge'])*$qunty,$data['payment_advance']) ;
+			$color_result= $result1->fetch_assoc();
+			 $amaunt = calculateAdvancePayment(($color_result['color_price']+$data['shipping_charge'])*$qunty,$data['payment_advance']) ;
+			$originalPayment = ($color_result['color_price'] + $data['shipping_charge']) * $qunty;
 		}
-		echo $amaunt;
-		exit;
-		
-		$data_jsone = ['asin'=>$asin,'value_e'=>$qunty,'value_f'=>$size,'value_g'=>$instructions];
-		$product = $_POST['asin'];
-	
-		$check_sql = "INSERT INTO orders(user_id,product_id,address_id,product_qunty,product_size,product_color,instruction)VALUES($user_id,'$product',$addressId,'$qunty','$size','$color','$instructions')";
+
+		$check_sql = "INSERT INTO orders(user_id,product_slug,address_id,product_qunty,product_color_id,instruction,original_amount)VALUES($user_id,'$product_slug',$addressId,'$qunty','$productColorId','$instructions',$originalPayment)";
 		$check_result = $conn->query($check_sql);
 		if ($check_result) {
 			  $row_id = mysqli_insert_id($conn);
 		}
-
-		
-
 		/* PHP */
 		$post_data = array();
-		$post_data['store_id'] = "dozkart0live";
-		$post_data['store_passwd'] = "6637A1AB0B4E645651";
+		// $post_data['store_id'] = "dozkart0live";
+		// $post_data['store_passwd'] = "6637A1AB0B4E645651";
+		$post_data['store_id'] = "testbox";
+		$post_data['store_passwd'] = "qwerty";
+
 		$post_data['total_amount'] = $amaunt;
 		$post_data['currency'] = "BDT";
 		$post_data['tran_id'] = "SSLCZ_TEST_" . uniqid();
-		$post_data['success_url'] = "https://www.dozkart.com/success_pay";
-		$post_data['fail_url'] = "https://www.dozkart.com/fail_pay";
-		$post_data['cancel_url'] = "https://www.dozkart.com/cancel_pay";
+		$post_data['success_url'] = "http://localhost/dozkart/success_pay";
+		$post_data['fail_url'] = "http://localhost/dozkart/fail_pay";
+		$post_data['cancel_url'] = "http://localhost/dozkart/cancel_pay";
 		# $post_data['multi_card_name'] = "mastercard,visacard,amexcard";  # DISABLE TO DISPLAY ALL AVAILABLE
 
 		# EMI INFO
@@ -91,9 +86,9 @@ if (isset($_POST['checkout_submit'])) {
 
 		# OPTIONAL PARAMETERS
 		$post_data['value_a'] = $user_id;
-		$post_data['value_b '] = '0123';
-		$post_data['value_c'] = $asin;
-		$post_data['value_d'] = $row_id;
+		$post_data['value_b'] = $_SESSION['sh_user'];
+		$post_data['value_c'] = $row_id;
+		$post_data['value_d'] = '';  // Corrected usage
 
 		# CART PARAMETERS
 		$post_data['cart'] = json_encode(array(
@@ -113,7 +108,8 @@ if (isset($_POST['checkout_submit'])) {
 
 
 		# REQUEST SEND TO SSLCOMMERZ
-		$direct_api_url = "https://securepay.sslcommerz.com/gwprocess/v4/api.php";
+		$direct_api_url = "https://sandbox.sslcommerz.com/gwprocess/v4/api.php";
+		// $direct_api_url = "https://securepay.sslcommerz.com/gwprocess/v4/api.php";
 
 		$handle = curl_init();
 		curl_setopt($handle, CURLOPT_URL, $direct_api_url);

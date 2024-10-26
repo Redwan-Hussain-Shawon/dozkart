@@ -122,7 +122,7 @@ if(isset($_GET['id'])){
                             </div>
                             <div class='d-flex gap-3 p-3'>
                                <div>
-                               <img src="<?php base_url('assets/upload/'.$mainData['image_url']) ?>" width="80" height="80" alt="">
+                               <img class="rounded-1 border p-1" src="<?php base_url('assets/upload/'.$mainData['image_url']) ?>" width="80" height="80" alt="">
                                </div>
                                 <div class='d-flex flex-column'>
                                     <h3 style="font-size: 19px;" class='mb-1'><?= $mainData['product_title'] ?></h3>

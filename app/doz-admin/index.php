@@ -10,7 +10,7 @@ include_once ('../../connect/conn.php');
 <html
   lang="en"
   class="light-style layout-menu-fixed layout-compact"
-  dir="ltr"
+dir="ltr"
   data-theme="theme-default"
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"

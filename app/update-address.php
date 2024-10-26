@@ -8,7 +8,7 @@ include_once('../connect/base_url.php');
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $user_id = getId();
     $id = mysqli_real_escape_string($conn,base64_decode($_GET['id']));
-    $sql = "SELECT * FROM address WHERE id=$id";
+    $sql = "SELECT * FROM address WHERE id=$id AND user_id=$user_id";
     if ($result = $conn->query($sql)) {
         if ($result->num_rows > 0) {
             $data = $result->fetch_assoc();
@@ -165,7 +165,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 <?php
             include_once('../include/footer.php');
         } else {
-            header('Location:404.php');
+            header('Location: '.base_url1('404.php'));
         }
     }else{
         header('Location: '.base_url1('404.php'));

@@ -6,56 +6,145 @@ include_once('../connect/base_url.php');
 <?php include_once('../include/header.php') ?>
 <?php include_once('../include/header_main.php');
 $user_id = getId();
+$sql = "SELECT 
+    o.id,
+    o.product_slug,
+    o.status,
+    o.amount,
+    o.original_amount,
+    p.product_title
+FROM 
+    orders o
+JOIN 
+    products p ON o.product_slug = p.product_slug
+WHERE o.user_id=$user_id AND o.status!=8
+";
+$result = $conn->query($sql);
 
 ?>
 <section class='my-5 px-2'>
-    <div class='container'>
-        <div class='row'>
-            <?php include_once('../include/account-header.php') ?>
-            <div class="col-lg-9" style='margin-top: 25px;'>
-                <div class='border-bottom pb-1 d-flex align-items-center justify-content-between'>
-                    <h4 class='fw-semibold'>Orders</h4>
-                </div>
-                <div class="order-progress-container">
-                    <h2>Order Progress</h2>
-        <ul class="order-progress-bar">
-          <li class="step completed" >
-            <span class="step-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M10.63 14.1a7 7 0 0 1 9.27-3.47a7 7 0 0 1 3.47 9.27A6.98 6.98 0 0 1 17 24c-2.7 0-5.17-1.56-6.33-4H1v-2c.06-1.14.84-2.07 2.34-2.82S6.72 14.04 9 14c.57 0 1.11.05 1.63.1M9 4c1.12.03 2.06.42 2.81 1.17S12.93 6.86 12.93 8s-.37 2.08-1.12 2.83s-1.69 1.12-2.81 1.12s-2.06-.37-2.81-1.12S5.07 9.14 5.07 8s.37-2.08 1.12-2.83S7.88 4.03 9 4m8 18a5 5 0 0 0 5-5a5 5 0 0 0-5-5a5 5 0 0 0-5 5a5 5 0 0 0 5 5m-1-8h1.5v2.82l2.44 1.41l-.75 1.3L16 17.69z"/>
-              </svg>
-            </span>
-            <span class="step-label">Order Monitoring</span>
-          </li>
-          
-          <li class="step" >
-          <span class="step-icon">
-         
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10 3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.32l3.329.554a2 2 0 0 1 1.67 1.973v3.432l2.06.686a1.25 1.25 0 0 1 .753 1.679l-2.521 5.883l1.156.579a1 1 0 1 1-.894 1.788l-2.659-1.329a2 2 0 0 0-1.788 0l-1.317.659a4 4 0 0 1-3.578 0l-1.317-.659a2 2 0 0 0-1.789 0l-2.658 1.33a1 1 0 1 1-.894-1.79l1.832-.916l-3.102-5.428a1.25 1.25 0 0 1 .69-1.806L5 10.279V6.847a2 2 0 0 1 1.67-1.973L10 4.32zM7.25 17.425a4 4 0 0 1 2.538.351l1.316.659a2 2 0 0 0 1.79 0l1.316-.659a4 4 0 0 1 3.282-.133l2.16-5.038L12 10.055l-7.527 2.508zM17 9.613V6.847l-5-.833l-5 .833v2.766l4.367-1.456a2 2 0 0 1 1.265 0z"/></g></svg>
-            </span>
-            <span class="step-label">Shipping</span>
-          </li>
-
-          <li class="step" id="step-6">
-          <span class="step-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 32 32"><path fill="currentColor" d="M0 6v2h19v15h-6.156c-.446-1.719-1.992-3-3.844-3s-3.398 1.281-3.844 3H4v-5H2v7h3.156c.446 1.719 1.992 3 3.844 3s3.398-1.281 3.844-3h8.312c.446 1.719 1.992 3 3.844 3s3.398-1.281 3.844-3H32v-8.156l-.063-.157l-2-6L29.72 10H21V6zm1 4v2h9v-2zm20 2h7.281L30 17.125V23h-1.156c-.446-1.719-1.992-3-3.844-3s-3.398 1.281-3.844 3H21zM2 14v2h6v-2zm7 8c1.117 0 2 .883 2 2s-.883 2-2 2s-2-.883-2-2s.883-2 2-2m16 0c1.117 0 2 .883 2 2s-.883 2-2 2s-2-.883-2-2s.883-2 2-2"/></svg>
-            </span>
-            <span class="step-label">Out for Delivery</span>
-          </li>
-          
-          <!-- Delivered step -->
-          <li class="step" id="step-7">
-          <span class="step-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="currentColor"><circle cx="17" cy="19" r="2"/><circle cx="7" cy="19" r="2"/><path d="M2 9v4.947c0 2.382 0 3.573.732 4.313c.487.492 1.171.657 2.268.712M12.427 5c.913.3 1.63 1.024 1.926 1.947c.147.456.147 1.02.147 2.15c0 .752 0 1.128.098 1.432a2.01 2.01 0 0 0 1.284 1.298c.301.099.673.099 1.418.099H22v2.021c0 2.382 0 3.573-.732 4.313c-.487.492-1.171.657-2.268.712M9 19h6"/><path d="M14.5 7h1.821c1.456 0 2.183 0 2.775.354c.593.353.938.994 1.628 2.276L22 12M7.327 8l1.486-1.174C9.604 6.2 10 5.888 10 5.5M7.327 3l1.486 1.174C9.604 4.8 10 5.112 10 5.5m0 0H2"/></g></svg>
-            </span>
-            <span class="step-label">Delivered</span>
-          </li>
-        </ul>
-      </div>
-            </div>
-
-
+  <div class='container'>
+    <div class='row'>
+      <?php include_once('../include/account-header.php') ?>
+      <div class="col-lg-9" style='margin-top: 25px;'>
+        <div class='border-bottom pb-1 d-flex align-items-center justify-content-between'>
+          <h4 class='fw-bold'>My Orders</h4>
         </div>
+        <?php if ($result->num_rows > 0) {
+            while ($order_data = $result->fetch_assoc()) {
+    ?>
+        <div class=" rounded order-card shadow">
+          <div class="p-3">
+            <div>
+              <h4 style="font-weight: 500;font-size:19px" class="line-clamp-3"><?= $order_data['product_title'] ?></h4>
+              <table class="table table- text-light mt-2">
+                <tbody>
+                  <tr>
+                    <td class="fw-semibold" style="font-size: 15px;">Total</td>
+                    <td class="h6 fw-semibold text-primary text-end" style="font-size: 15px;text-align: left !important;">BDT <?= $order_data['original_amount'] ?></td>
+                  </tr>
+                  <tr>
+                    <td class="fw-medium" style="font-size: 15px;">Advance Payment:</td>
+                    <td class="h6 fw-semibold text-end" style="font-size: 15px;text-align: left !important;">BDT <?= $order_data['amount'] ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="fw-medium" style="font-size: 15px;">Cash on Payment:</td>
+                    <td class="h6 fw-semibold text-end" style="font-size: 15px;text-align: left !important;">BDT <?= $order_data['original_amount']-$order_data['amount'] ?></td>
+                  </tr>
+                </tbody>
+              </table>
+              <a href="<?php base_url('invoice/'.$order_data['id']) ?>"><button class="btn btn-primary">Download Invoice</button></a>
+
+            </div>
+          </div>
+          <?php 
+          	// 1.Order Processing 2.Ready to Export, 3.Custom, 4.Warehouse, 5.Deliver, 6.Complete 7.Order Cancel 8.order check	
+          $orderStatus= $order_data['status'];
+          ?>
+          <div class="order-progress-container">
+            <h2>Order Progress</h2>
+            <?php if($orderStatus==7){ ?>
+              <div class="alert alert-danger text-center px-4 px-md-5 mx-auto" style="width: fit-content; background-color: #f8d7da; color: #721c24; border: 2px solid #ffb7bf;border-radius: 4px;">
+    <strong>Order Canceled!</strong><br>
+    We're sorry, but your order has been canceled. Your payment will be refunded soon.
+</div>
+
+              <?php }else if($orderStatus==6){?>
+                <div class="alert alert-success text-center px-4 px-md-5 mx-auto " style="width: fit-content; background-color: #d4edda; color: #155724; border: 2px solid #c3e6cb; border-radius: 4px;">
+    <strong>Order Successful!</strong><br>
+    Your order has been successfully completed. Thank you for your purchase! Stay with us for more great deals.
+</div>
+
+               <?php }else{ ?>
+            <div class="overflow-x-auto">
+              <ul class="order-progress-bar" style="min-width: 500px;">
+                <li class="step steps-1 <?php echo $orderStatus == 2 || $orderStatus == 3 || $orderStatus == 4 || $orderStatus == 5 ? 'completed' : ''; ?>">
+                  <span class="step-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 2048 2048">
+                      <path fill="currentColor" d="M1930 630q0 46-10 86l123 51l-48 118l-124-51q-47 74-121 121l51 124l-118 49l-51-124q-40 10-86 10t-86-10l-51 124l-118-49l51-124q-74-47-121-121l-124 51l-49-118l124-51q-10-40-10-86t10-86l-124-51l49-118l124 51q47-74 121-121l-51-123l118-49l51 123q40-10 86-10t86 10l51-123l118 49l-51 123q74 47 121 121l124-51l48 118l-123 51q10 40 10 86m-384 256q53 0 99-20t82-55t55-81t20-100q0-53-20-99t-55-82t-81-55t-100-20q-53 0-99 20t-82 55t-55 81t-20 100q0 53 20 99t55 82t81 55t100 20m-438 162l49 119l-137 56q14 56 14 111t-14 111l137 57l-49 118l-137-57q-30 51-68 88t-88 69l57 137l-119 48l-56-137q-56 14-111 14t-111-14l-57 137l-118-48l57-137q-51-32-88-69t-69-88l-137 57l-48-118l137-57q-14-56-14-111t14-111l-137-56l48-119l137 57q32-50 69-88t88-68l-57-137l118-49l57 137q56-14 111-14t111 14l56-137l119 49l-57 137q97 59 156 156zm-522 606q66 0 124-25t101-68t69-102t26-125t-25-124t-69-101t-102-69t-124-26t-124 25t-102 69t-69 102t-25 124t25 124t68 102t102 69t125 25m1206 394v-768h128v768zm-384 0v-768h128v768z" />
+                    </svg>
+                  </span>
+                  <span class="step-label">Order Processing</span>
+                </li>
+                <li class="step <?php echo  $orderStatus == 3 || $orderStatus == 4 || $orderStatus == 5 ? 'completed' : ''; ?>">
+                  <span class="step-icon">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="currentColor" d="M22 4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1zM4 15h3.416a5.001 5.001 0 0 0 9.168 0H20v4H4zM4 5h16v8h-5a3 3 0 1 1-6 0H4zm12 6h-3v3h-2v-3H8l4-4.5z" />
+                    </svg>
+                  </span>
+                  <span class="step-label">Ready to Export</span>
+                </li>
+
+                <li class="step <?php echo  $orderStatus == 4 || $orderStatus == 5 ? 'completed' : ''; ?>" id="step-6">
+                  <span class="step-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 64 64">
+                      <path fill="currentColor" d="M60.21 47v-.06A7.49 7.49 0 0 0 51 41.7c-3.41 1-8.09 2.4-11.62 3.42a4.68 4.68 0 0 0-.09-3.12c-.9-2.25-3.41-3.26-5.51-3.26H24a3.94 3.94 0 0 1-2.58-1.2a5.65 5.65 0 0 0-3.84-1.5H9.67a6.34 6.34 0 0 0-6.21 6.46v12.59a6.46 6.46 0 0 0 6.32 6.58h9.51a6.13 6.13 0 0 0 3.42-1.06h.1A18.75 18.75 0 0 0 31.87 63a18.5 18.5 0 0 0 5.56-.84l17.66-5.39h.13A7.74 7.74 0 0 0 60.21 47M9.78 57.67a2.46 2.46 0 0 1-2.32-2.58V42.54a2.34 2.34 0 0 1 2.21-2.46h7.9a1.63 1.63 0 0 1 1.14.45a11 11 0 0 0 .94.75v16.35a2 2 0 0 1-.36 0ZM53.86 53l-17.62 5.34a14.3 14.3 0 0 1-4.37.66a14.8 14.8 0 0 1-7.16-1.85l-1.06-.57V42.76h10.13a2.08 2.08 0 0 1 1.8.75c.14.36-.12 1.55-2.15 3.48l-1.15 1.11l.79 1.37c.81 1.4 1.6 1.17 4.94.22c1.58-.45 3.69-1.06 5.79-1.68c4.18-1.22 8.36-2.47 8.36-2.47a3.53 3.53 0 0 1 4.21 2.53A3.76 3.76 0 0 1 53.86 53m-3.31-37.39a7.31 7.31 0 1 0-7.31-7.3a7.32 7.32 0 0 0 7.31 7.3m0-10.61a3.31 3.31 0 1 1-3.31 3.31A3.31 3.31 0 0 1 50.55 5m-2.37 32.38h3.3a7.26 7.26 0 0 0 7.25-7.25v-5.69a7.26 7.26 0 0 0-7.25-7.25h-3a7.26 7.26 0 0 0-7.25 7.25v5.66a7.22 7.22 0 0 0 6.95 7.28m-2.94-12.94a3.25 3.25 0 0 1 3.25-3.25h3a3.26 3.26 0 0 1 3.25 3.25v5.69a3.26 3.26 0 0 1-3.25 3.25h-3.3a3.2 3.2 0 0 1-2.94-3.32Z" />
+                    </svg>
+                  </span>
+                  <span class="step-label">Custom</span>
+                </li>
+
+                <!-- Delivered step -->
+                <li class="step <?php echo   $orderStatus == 5 ? 'completed' : ''; ?>" id="step-7">
+                  <span class="step-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
+                      <path fill="currentColor" d="M240 184h-8V57.9l9.67-2.08a8 8 0 1 0-3.35-15.64l-224 48A8 8 0 0 0 16 104a8 8 0 0 0 1.69-.18l6.31-1.35V184h-8a8 8 0 0 0 0 16h224a8 8 0 0 0 0-16M40 99l176-37.67V184h-24v-56a8 8 0 0 0-8-8H72a8 8 0 0 0-8 8v56H40Zm136 53H80v-16h96Zm-96 16h96v16H80Z" />
+                    </svg>
+                  </span>
+                  <span class="step-label">Warehouse</span>
+                </li>
+                <li class="step " id="step-7">
+                  <span class="step-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24">
+                      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="currentColor">
+                        <circle cx="17" cy="19" r="2" />
+                        <circle cx="7" cy="19" r="2" />
+                        <path d="M2 9v4.947c0 2.382 0 3.573.732 4.313c.487.492 1.171.657 2.268.712M12.427 5c.913.3 1.63 1.024 1.926 1.947c.147.456.147 1.02.147 2.15c0 .752 0 1.128.098 1.432a2.01 2.01 0 0 0 1.284 1.298c.301.099.673.099 1.418.099H22v2.021c0 2.382 0 3.573-.732 4.313c-.487.492-1.171.657-2.268.712M9 19h6" />
+                        <path d="M14.5 7h1.821c1.456 0 2.183 0 2.775.354c.593.353.938.994 1.628 2.276L22 12M7.327 8l1.486-1.174C9.604 6.2 10 5.888 10 5.5M7.327 3l1.486 1.174C9.604 4.8 10 5.112 10 5.5m0 0H2" />
+                      </g>
+                    </svg>
+                  </span>
+                  <span class="step-label">Deliver</span>
+                </li>
+              </ul>
+            </div>
+            <?php } ?>
+          </div>
+          <!-- </div> -->
+        </div>
+        <?php 
+              
+      }
+        }else{ ?>
+<div class="alert mt-3 alert-danger text-center px-4 px-md-5 mx-auto" style="background-color: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; border-radius:4px;">
+    <strong>No Orders Found!</strong><br>
+    You don't have any active orders at the moment. Please make a purchase to continue.
+</div>
+
+        <?php  } ?>
+      </div>
     </div>
 </section>
 

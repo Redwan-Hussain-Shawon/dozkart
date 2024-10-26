@@ -363,6 +363,15 @@ header .container {
     gap: 15px;
 }
 
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;  /* Limits text to 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
 @media (min-width: 992px) {
     .position-lg-sticky {
         position: sticky !important;
@@ -490,7 +499,16 @@ header .container {
     transform: translateX(-50%);
     z-index: -1;
   }
-  
+  .step.steps-1::after{
+    content: '';
+    position: absolute;
+    top: 20px;
+    width: 30px;
+    height: 4px;
+    background-color: var(--primary);
+    left: 0px;
+    z-index: -1;
+  }
   .step.completed:before {
     background-color: var(--primary);
   }

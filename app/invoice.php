@@ -1,115 +1,205 @@
 <?php
+define('MYSITE', true);
+include_once('../vendor/autoload.php');
+include_once('../connect/base_url.php');
+include_once('../connect/conn.php');
+include_once('../include/helper.php');
+protected_area();
+// Import Dompdf namespaces
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
-require_once('../vendor/autoload.php');
-require_once('../connect/base_url.php');
+if (isset($_GET['id']) && !empty($_GET['id'])) {
 
-// Create an instance of the mPDF class
-$mpdf = new \Mpdf\Mpdf();
+  $options = new Options();
+  $options->set('isRemoteEnabled', true);
 
-// Ensure base_url() returns a full URL or absolute file path
-$imagePath = base_url1("assets/img/dozkart.svg");
+  // Create an instance of Dompdf
+  $dompdf = new Dompdf($options);
 
-// HTML content for the invoice, with the corrected image path
-$html = ' 
+  $id = mysqli_real_escape_string($conn, $_GET['id']);
+  $user_id = getId();
+
+  $sql = "SELECT 
+         o.address_id,
+         o.product_slug,
+         o.product_color_id,
+         o.product_qunty,
+         o.date,
+         o.amount,
+         o.original_amount,
+         o.tran_id,
+         o.bank_tran_id,
+         a.name,
+         a.country,
+         a.district,
+         a.thana_upazilla,
+         a.address,
+         a.phone,
+         p.product_title,
+         pc.color_name
+         FROM orders o
+        JOIN 
+         address a ON o.address_id=a.id 
+        JOIN
+         products p ON o.product_slug=p.product_slug
+        LEFT JOIN product_color pc ON o.product_color_id = pc.color_id
+        WHERE o.id=$id AND o.user_id=$user_id";
+
+  $result = $conn->query($sql);
+  if ($result->num_rows > 0) {
+    $data = $result->fetch_assoc();
+
+    $color_name = empty($data['color_name']) ? '-' : $data['color_name'];
+    $imagePath = base_url1("assets/img/dozkart.svg");
+
+    // $sql = ""
+    $html = '
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Invoice</title>
-    <style>
-        body {
-            font-family:sans-serif;
-            margin: 10px;
-        }
-        h1 {
-            text-align: center;
-            margin: 10px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        table th, table td {
-          border: 1px solid rgba(230, 229, 229, 0.5); /* Adjust opacity as needed */
-
-            padding: 10px;
-            text-align: left;
-        }
-        table th {
-            background-color: #f2f2f2;
-        }
-        .total {
-            font-weight: bold;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 12px;
-        }
-        .logo {
-            margin-bottom: 0px !important;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice</title>
+  <link rel="icon" href="'. base_url1('assets/img/dozkart.png').'">
+  <link href="' . base_url1('assets/css/fixt.css') . '" rel="stylesheet">
+  <style>
+    body, html {
+      font-family: sans-serif;
+      font-size: 15px;
+      color: #333;
+      margin: 0px !important;
+    }
+    .container {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+      padding: 50px;
+    }
+    .invoice-header-table {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .invoice-header-table td {
+      vertical-align: top;
+      padding: 5px;
+    }
+    .company-details img {
+      width: 90px;
+      margin-bottom:10px
+    }
+      p{
+    margin-bottom:5px;
+    font-size:14px
+      }
+         .invoice-header-table {
+                    width: 100%;
+                    margin-bottom: 20px;
+                }
+                .invoice-header-table img {
+                    max-width: 150px;
+                }
+                .product-table, .total-section {
+                    width: 100%;
+                    margin-top: 20px;
+                    border-collapse: collapse;
+                }
+                .product-table th, .product-table td, .total-section td {
+                    border: 1px solid #ccc;
+                    padding: 10px;
+                    text-align: left;
+                }
+  </style>
 </head>
 <body>
-<div class="logo">
-   <img src="' . $imagePath . '" alt="Logo" style="width:80px">
-</div>
-<h1>Invoice</h1>
+
+  <div class="container">
+
+    <!-- Header -->
+    <table class="invoice-header-table">
+      <tr>
+        <td  class="company-details">
+          <img src="' . $imagePath . '" alt="Logo">
+          <p>Dozkart</p>
+          <p>Address, City, Country</p>
+          <p>Email: info@company.com</p>
+        </td>
+        <td class="invoice-details text-end">
+          <h2>Invoice</h2>
+          <p><b>Invoice ID:</b> ' . $data['bank_tran_id'] . '</p>
+          <p><b>Date:</b> ' . date('F j, Y', strtotime($data['date'])) . '</p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Billing Information -->
+    <h5 class="text-decoration-underline">Billing Address</h5>
+  <p> <b>Name:</b> ' . $data['name'] . '</p>
+    <p><b>Phone:</b> ' . $data['phone'] . '</p>
+  <p><b>Country:</b> ' . $data['country'] . '</p>
+  <p><b>District:</b> ' . $data['district'] . '</p>
+  <p><b>Thana/Upazilla</b>: ' . $data['thana_upazilla'] . '</p>
+  <p><b>Address:</b> ' . $data['address'] . '</p>
 
 
-<p><strong>Invoice Id:</strong> 12345</p>
-<p><strong>Date:</strong> ' . date('Y-m-d') . '</p>
+    <!-- Product Table -->
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th >Title</th>
+          <th class="text-center">Qty</th>
+          <th>Color Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="width:60%">' . $data['product_title'] . '</td>
+          <td class="text-center">' . $data['product_qunty'] . '</td>
+         <td class="text-center">' . $color_name . '</td>
 
-<h2>Bill To:</h2>
-<p>
-    John Doe<br>
-    123 Main Street<br>
-    City, State, Zip<br>
-    Email: johndoe@example.com
-</p>
+        </tr>
+      </tbody>
+    </table>
 
-<h2>Items:</h2>
-<table>
-    <tr>
-        <th>Description</th>
-        <th>Quantity</th>
-        <th>Unit Price</th>
-        <th>Total</th>
-    </tr>
-    <tr>
-        <td>Web Design Services</td>
-        <td>2</td>
-        <td>$500.00</td>
-        <td>$1000.00</td>
-    </tr>
-    <tr>
-        <td>SEO Services</td>
-        <td>1</td>
-        <td>$300.00</td>
-        <td>$300.00</td>
-    </tr>
-    <tr>
-        <td>Hosting Fees</td>
-        <td>1</td>
-        <td>$100.00</td>
-        <td>$100.00</td>
-    </tr>
+    <!-- Total Section -->
+   <table class="total-section">
+                    <tr>
+    <td class="label">Subtotal:</td>
+    <td class="amount">BDT ' . $data['original_amount'] . '</td>
+</tr>
+<tr>
+    <td class="label">Advance Payment:</td>
+    <td class="amount">BDT ' . $data['amount'] . '</td>
+</tr>
+<tr>
+    <td class="label">Cash On Payment:</td>
+    <td class="amount"><strong>BDT ' . number_format($data['original_amount'] - $data['amount'], 2) . '</strong></td>
+</tr>
 
-    <tr>
-        <td colspan="3" class="total">Total</td>
-        <td>$1540.00</td>
-    </tr>
-</table>
+                </table>
+    <div class="mt-5">
+    <p>Thank you for purchasing our product! We truly appreciate your support. If you have any questions or need assistance, please dont hesitate to reach out to us at company@example.com.</p>
+    <p>The Dozkart Team</p>
+  </div>
+
+  </div>
 
 </body>
 </html>
 ';
-// echo $html;
-// Write the HTML to the PDF
-$mpdf->WriteHTML($html);
 
-// Output the PDF to the browser for download (ensure nothing has been output previously)
-$mpdf->Output();
-?>
+    // Load the HTML content
+    $dompdf->loadHtml($html);
+
+    // Set paper size and orientation
+    $dompdf->setPaper('A4', 'portrait');
+
+    // Render the PDF
+    $dompdf->render();
+
+    // Output the PDF
+    $dompdf->stream('dozkart_invoice.pdf', ['Attachment' => 0]); // Set Attachment to 1 for download
+  } else {
+    header('Location:' . base_url1('404'));
+  }
+}

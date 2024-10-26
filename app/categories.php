@@ -33,7 +33,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         $results_per_page = 20;
         $page = isset($_GET['page']) ? mysqli_real_escape_string($conn, trim($_GET['page'])) : 1;
         $offset = ($page - 1) * $results_per_page;
-        $sql = "SELECT id,asin,product_photo,product_minimum_offer_price,sales_volume,product_title FROM product_main WHERE search='$query' LIMIT $offset, $results_per_page";
+        $sql = "SELECT id,asin,product_photo,product_minimum_offer_price,sales_volume,product_title FROM product_main WHERE search='$query'  ORDER BY RAND()  LIMIT $offset, $results_per_page";
         if ($result = $conn->query($sql)) {
         ?>
             <div class="row">

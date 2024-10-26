@@ -450,7 +450,32 @@ $('.categoryClick').on('click', function() {
 
 
 const filterSubmit = ()=>{
-  var minPrice = $('#min-price').val();
-  var maxPrice = $('#max-price').val();
-  console.log(minPrice,maxPrice)
+  const form = document.getElementById('filterForm');
+  const formData = new FormData(form);
+  const filters = {};
+console.log(formData)
+  formData.forEach((value, key) => {
+      if (!filters[key]) {
+          filters[key] = [];
+      }
+      filters[key].push(value);
+  });
+  let jsonData = JSON.stringify(filters);
+
+    $.ajax({
+      type: "POST",
+      url: url + "api/categories.php",
+      contentType: 'application/json',
+      data: jsonData,
+      dataType: "dataType",
+      success: function(response) {
+        console.log('Filtered Data:', response);
+    },
+    error: function(xhr, status, error) {
+        console.error('Error:', error);
+    }
+    });
 }
+
+
+

@@ -60,7 +60,13 @@ include_once('include/header.php');
                         <div class="form-password-toggle">
                             <label class="form-label" for="product_rating_star">Product Rating Star</label>
                             <div class="input-group input-group-merge">
-                                <input type="text" id="product_rating_star" name="product_rating_star" class="form-control" placeholder="5,4,3,2 like  " required>
+                                <select name="product_rating_star" id="" required class="form-control">
+                                    <option value="">Select</option>
+                                    <option value="5">5 Star</option>
+                                    <option value="4">4 Star</option>
+                                    <option value="3">3 Star</option>
+                                    <option value="2">2 Star</option>
+                                </select>
                             </div>
                         </div>
                     </div>

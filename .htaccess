@@ -47,14 +47,12 @@ RewriteRule ^404 /dozkart/app/404.php [L]
 
 Options -Indexes
 
-
 RewriteRule ^payment /dozkart/app/payment.php [L]
 RewriteRule ^success_pay /dozkart/app/pay_success.php [L]
 RewriteRule ^cancel_pay /dozkart/app/pay_cancel.php [L]
 RewriteRule ^fail_pay /dozkart/app/pay_fail.php [L]
 
-RewriteRule ^invoice /dozkart/app/invoice.php [L]
-
+RewriteRule ^invoice/([^/]+)$ /dozkart/app/invoice.php?id=$1 [L]
 
 RewriteRule ^doz-admin /dozkart/app/doz-admin/index.php [L]
 RewriteRule ^admin-doz/dashboard /dozkart/app/doz-admin/dashboard.php [L]
