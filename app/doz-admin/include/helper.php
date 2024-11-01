@@ -23,6 +23,21 @@ function shortenText($text, $maxLength) {
     return $text;
 }
 
+function getOrderStatus($status) {
+    // Define an associative array mapping status values to their descriptions
+    $statuses = [
+        1 => 'Processing',
+        2 => 'Ready to Export',
+        3 => 'Custom',
+        4 => 'Warehouse',
+        5 => 'Deliver',
+        6 => 'Complete',
+        7 => 'Order Cancel',
+        8 => 'Order Check'
+    ];
+
+    return isset($statuses[$status]) ? $statuses[$status] : 'Unknown Status';
+}
 
 
 ?>

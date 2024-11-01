@@ -105,7 +105,6 @@ function loadCartItems() {
           cartItemsContainer.innerHTML = ''; 
          
           if (Array.isArray(response)) {
-            console.log(response)
               if (response.length > 0) {
                   response.forEach(item => {
                       const totalPrice = (parseInt(item.product_price)  * parseInt(item.quantity));
@@ -453,28 +452,102 @@ const filterSubmit = ()=>{
   const form = document.getElementById('filterForm');
   const formData = new FormData(form);
   const filters = {};
-console.log(formData)
   formData.forEach((value, key) => {
       if (!filters[key]) {
           filters[key] = [];
       }
       filters[key].push(value);
   });
+
+  const hasFilters = Object.values(filters).some(values => values.some(val => val.trim() !== ""));
+
+  if (!hasFilters) {
+      console.log("No valid filters selected. AJAX request will not be sent.");
+      return;
+  }
+
+
   let jsonData = JSON.stringify(filters);
 
-    $.ajax({
-      type: "POST",
-      url: url + "api/categories.php",
-      contentType: 'application/json',
-      data: jsonData,
-      dataType: "dataType",
-      success: function(response) {
+  
+
+  $.ajax({
+    type: "POST",
+    url: url + "api/categories.php",
+    contentType: 'application/json',
+    dataType: "json",
+    data: jsonData,
+    beforeSend: function() {
+      $('#productsContainer').append(`
+        <div class='loader-main align-items-center justify-content-center h-100 w-100' style='position: absolute; top: 0; left: 0; z-index: 10001; background: rgba(227, 227, 227, 0.95); height: 100%; display: flex;'>
+            <span class="loader"></span>
+        </div>
+    `);
+    },
+    
+    success: function(response) {
         console.log('Filtered Data:', response);
+        $('#productsContainer').empty();
+
+        if (response.status && response.data.length > 0) {
+            response.data.forEach(data => {
+                $('#productsContainer').append(`
+                    <div class="col-lg-3 px-1 px-md-2 col-md-4 col-6 product overflow-hidden position-relative py-1" style='padding:5px'>
+                        <a href="${url + 'view-product/' + data.product_slug}">
+                            <div class='shadow-sm rounded-1 h-100'>
+                                <div class="img overflow-hidden" style='border-radius:2px 2px 0 0; background-image: url("${url + 'assets/img/default-image.png'}"); height: 240px; background-repeat: no-repeat; background-position: center; background-size: 80%;'>
+                                    <img src="${url + 'assets/upload/' + data.image}" alt="" class="w-100 object-fit-cover" style='border-radius:2px 2px 0 0; height: 240px;'>
+                                </div>
+                                <div class="p-2 text-left">
+                                    <div class="d-flex align-items-end gap-2">
+                                        <span class="fw-semibold text-primary" style='font-size: 14px;'>BDT ${data.product_price}</span>
+                                    </div>
+                                    <h3 class="mb-1 overflow-hidden" style='font-size: 16px; line-height:24px; display: -webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2;'>
+                                        ${data.product_title}
+                                    </h3>
+                                    <div class='d-flex align-items-center gap-1'>
+                                        ${Array.from({length: data.product_rating_star}, (_, i) => `
+                                            <img style='width:12px;' src="${url + 'assets/img/star.png'}" alt='star' />
+                                        `).join('')}
+                                        <p class='mb-0' style='margin-left: 5px; font-size:13px'>${data.product_ratting} Rating</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <div style='top: 15px;' class="position-absolute d-flex gap-1 flex-column product-triger-main">
+                            <div class='bg-white shadow-sm product-triger d-flex align-items-center justify-content-center'>
+                                <a href="${url + 'view-product/' + data.product_slug}" class='text-paragraph'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                            <path d="M15 12a3 3 0 1 1-6 0a3 3 0 0 1 6 0"></path>
+                                            <path d="M2 12c1.6-4.097 5.336-7 10-7s8.4 2.903 10 7c-1.6 4.097-5.336 7-10 7s-8.4-2.903-10-7"></path>
+                                        </g>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+        } else {
+            // Handle case when no data is returned
+            $('#productsContainer').append(`
+               <div class="col-12 text-center">
+   <h5 class="text-danger fw-bold text-center fw-normal d-none d-lg-block py-3" style="font-size: 22px;">Product Not Found</h5>
+</div>
+
+            `);
+        }
     },
     error: function(xhr, status, error) {
         console.error('Error:', error);
+    },
+    complete: function() {
+       
+          $('#loader-main').remove();
     }
-    });
+});
+
 }
 
 

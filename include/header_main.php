@@ -2,6 +2,13 @@
  if(!defined('MYSITE')){
     header("location:../home");
   }
+  $ip =$_SERVER['REMOTE_ADDR'];
+$query = "SELECT * FROM visitors WHERE ip_address='$ip'";
+$result=$conn->query($query);
+if($result->num_rows == 0){
+$query = "INSERT INTO visitors(ip_address)VALUES('$ip')";
+$conn->query($query);
+}
 
 ?>
 </head>
@@ -37,12 +44,6 @@
                     <p class='mb-0 text-white'>First Order 50% Discount on Shaping Changes</p>
                 </div>
                 <div class='d-flex align-items-center gap-4'>
-                    <a href="#" style='font-size: 14px;color:var(--white)' class="d-flex align-items-center gap-1 text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                            <path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 12.572L12 20l-7.5-7.428A5 5 0 1 1 12 6.006a5 5 0 1 1 7.5 6.572" />
-                        </svg>
-                        Wish List
-                    </a>
                     <div>
                         <div class='d-flex gap-2 align-items-center pointer' data-bs-toggle="dropdown">
                             <img src="<?php base_url('assets/img/bd.png') ?>" alt="" style="width: 24px;">

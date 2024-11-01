@@ -6,6 +6,11 @@ if (!defined('MYSITE')) {
 <div class='bg-white shadow-sm h-full rounded-1 mb-4'>
     <h3 class='d-flex mb-0 justify-content-between bg-primary text-white' style='border-radius:0.25rem 0.25rem 0 0;font-size:1.2rem;padding:13px 1rem;'>Categories <a href='<?php base_url('categories') ?>' style='font-size: 1rem;' class='text-white'> See All</span></h3>
     <div class="dropdown categories-main px-3">
+        <a class="btn px-0 hover-primary btn-secondary  rounded-0  d-flex justify-content-between py-2" href="<?php base_url('categories?search=Mixer Grinder') ?>" style='font-size: 14px;border-bottom:1px solid var(--primary)'>
+        Mixer Grinder
+        </a>
+    </div>
+    <div class="dropdown categories-main px-3">
         <a class="btn hover-primary px-0 btn-secondary rounded-0  d-flex justify-content-between" role="button" data-bs-toggle="" aria-expanded="false" style='font-size: 14px;border-bottom:1px solid var(--primary)'>
             Grocery<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
                 <path fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" d="m10 17l5-5l-5-5" />
@@ -131,6 +136,7 @@ if (!defined('MYSITE')) {
                 <li><a href="<?php base_url('categories?search=WOMAN FOOT WEAR') ?>" class="hover-primary pointer text-paragraph fw-normal">WOMAN- FOOT WEAR</a></li>
                 <li><a href="<?php base_url('categories?search=WATCH') ?>" class="hover-primary pointer text-paragraph fw-normal">WATCH <a></li>
                 <li><a href="<?php base_url('categories?search=BAG LAGAGE') ?>" class="hover-primary pointer text-paragraph fw-normal">BAGLAGAGE</a></li>
+                <li><a href="<?php base_url('categories?search=mixer-grinder') ?>" class="hover-primary pointer text-paragraph fw-normal">Mixer Grinder</a></li>
 
             </ul>
         </div>
@@ -217,9 +223,5 @@ if (!defined('MYSITE')) {
             Automobile Accessories
         </a>
     </div>
-    <div class="dropdown categories-main px-3">
-        <a class="btn px-0 hover-primary btn-secondary  rounded-0  d-flex justify-content-between py-2" href="<?php base_url('categories?search=  Students Kit') ?>" style='font-size: 14px;border-bottom:1px solid var(--primary)'>
-        Students Kit
-        </a>
-    </div>
+ 
 </div>

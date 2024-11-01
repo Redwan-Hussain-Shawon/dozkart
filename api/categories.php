@@ -12,7 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if data is valid
     if ($data && is_array($data)) {
 
-        $query = "SELECT DISTINCT p.*, 
+        $query = "SELECT DISTINCT 
+     p.product_slug, 
+     p.product_price, 
+     p.product_title, 
+        p.product_rating_star, 
+    p.product_ratting,  
         (SELECT pi.image_url FROM product_image pi WHERE pi.product_slug = p.product_slug ORDER BY pi.image_id LIMIT 1) AS image
         FROM products p 
         LEFT JOIN product_color pc ON p.product_slug = pc.product_slug 
@@ -63,8 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }, $data['ratting']));
             $query .= " AND p.product_rating_star IN ('$ratings')";
         }
-        
-
+        $query .= " LIMIT 40";
         // Execute the query
         $result = mysqli_query($conn, $query);
         

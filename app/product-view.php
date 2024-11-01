@@ -18,10 +18,20 @@ WHERE
     if ($result = $conn->query($sql)) {
         if ($result->num_rows > 0) {
             $mianValueProduct = $result->fetch_assoc();
-
             define('MYSITE', true);
             include_once('../include/header.php') ?>
-           
+            <meta name="description" content="<?php echo htmlspecialchars($mianValueProduct['product_brand_name']); ?> <?php echo htmlspecialchars($mianValueProduct['product_title']); ?> featuring a powerful <?php echo htmlspecialchars($mianValueProduct['product_price']); ?>W motor with Vent-X technology, <?php echo htmlspecialchars($mianValueProduct['product_size']); ?> stainless steel jars, rated <?php echo htmlspecialchars($mianValueProduct['product_ratting']); ?>/5 stars by <?php echo htmlspecialchars($mianValueProduct['product_rating_count']); ?> users. Available on <?php echo htmlspecialchars($mianValueProduct['website_name']); ?>.">
+
+            <meta property="og:title" content="<?= $mianValueProduct['product_title']; ?>">
+            <meta property="og:description" content="<?php echo htmlspecialchars($mianValueProduct['product_brand_name']); ?> <?php echo htmlspecialchars($mianValueProduct['product_title']); ?> featuring a powerful <?php echo htmlspecialchars($mianValueProduct['product_price']); ?>W motor with Vent-X technology, <?php echo htmlspecialchars($mianValueProduct['product_size']); ?> stainless steel jars, rated <?php echo htmlspecialchars($mianValueProduct['product_ratting']); ?>/5 stars by <?php echo htmlspecialchars($mianValueProduct['product_rating_count']); ?> users. Available on <?php echo htmlspecialchars($mianValueProduct['website_name']); ?>.">
+            <?php if ($img = productImage($slug, $conn)) {?>
+            <meta property="og:image" content="<?php base_url('assets/upload/' . $img[0]['image_url'])  ?>">
+            <?php } ?>
+            <meta property="og:url" content="<?php base_url('view-product/'.$mianValueProduct['product_slug']) ?>">
+            <meta property="og:type" content="product">
+
+
+
 
             <?php include_once('../include/header_main.php') ?>
             <style>
@@ -32,6 +42,7 @@ WHERE
                     cursor: pointer;
                 }
             </style>
+            
             <section class='bg-light py-2 py-lg-4'>
                 <div class="container ">
                     <div class='bg-white  rounded-1 py-4'>
@@ -41,12 +52,12 @@ WHERE
                                     <?php if ($img = productImage($slug, $conn)) {
 
                                     ?>
-                                        <div class="product-gallery-preview-item img-container" id="first" >
-                                            <img src="<?php  base_url('assets/upload/'.$img[0]['image_url'])  ?>" alt="Product image" id='zoom_01' class='w-100 object-fit-contain view-zoom-img rounded-1 border zoomable-image' style="height: 430px;">
+                                        <div class="product-gallery-preview-item img-container" id="first">
+                                            <img src="<?php base_url('assets/upload/' . $img[0]['image_url'])  ?>" alt="Product image" id='zoom_01' class='w-100 object-fit-contain view-zoom-img rounded-1 border zoomable-image' style="height: 430px;">
                                         </div>
                                         <div class="d-flex align-items-center justify-content-center justify-content-lg-start gap-2 mt-2 flex-wrap">
                                             <?php foreach ($img as $mainImg) { ?>
-                                                <img src="<?php  base_url('assets/upload/'.$mainImg['image_url'])  ?> " style='width:60px;height:60px;' alt="Product image" class=' object-fit-contain border p-1 thumbnail pointer' />
+                                                <img src="<?php base_url('assets/upload/' . $mainImg['image_url'])  ?> " style='width:60px;height:60px;' alt="Product image" class=' object-fit-contain border p-1 thumbnail pointer' />
                                             <?php } ?>
                                         </div>
                                     <?php } ?>
@@ -65,28 +76,27 @@ WHERE
                                     </div>
                                     <div class="h4 fw-semibold text-accent py-2 mb-0" id='priceShow'>BDT <?php echo $mianValueProduct['product_price'] ?></div>
                                     <div class='d-flex align-items-center gap-2 mb-1'>
-                                    <h3 class='fw-semibold mb-0 text-paragraph' style='font-size: 15px;'>Shipping Charge: </h3>
-                                    <p class='mb-0 f-15 fw-semibold'>BDT <?php echo $mianValueProduct['shipping_charge'] ?> (All Bangladesh ) </p>
-                                </div>
-                                <div class='d-flex align-items-center gap-2 mb-3'>
-                                    <h3 class='fw-semibold mb-0 ' style='font-size: 16px;' >Total Amount: </h3>
-                                    <p class='mb-0 f-15 fw-semibold text-primary' id="totalPriceShow" style='font-size: 16px !important;'>BDT <?php echo $mianValueProduct['product_price']+$mianValueProduct['shipping_charge'] ?> </p>
-                                </div>
+                                        <h3 class='fw-semibold mb-0 text-paragraph' style='font-size: 15px;'>Shipping Charge: </h3>
+                                        <p class='mb-0 f-15 fw-semibold'>BDT <?php echo $mianValueProduct['shipping_charge'] ?> (All Bangladesh ) </p>
+                                    </div>
+                                    <div class='d-flex align-items-center gap-2 mb-3'>
+                                        <h3 class='fw-semibold mb-0 ' style='font-size: 16px;'>Total Amount: </h3>
+                                        <p class='mb-0 f-15 fw-semibold text-primary' id="totalPriceShow" style='font-size: 16px !important;'>BDT <?php echo $mianValueProduct['product_price'] + $mianValueProduct['shipping_charge'] ?> </p>
+                                    </div>
 
-                                  
+
                                     <?php if ($productColor = productColor($slug, $conn)): ?>
                                         <div class='d-flex mb-3'>
                                             <h4 class='text-paragraph' style='font-size:14px;margin-right:20px'>Color</h4>
 
                                             <div class='d-flex gap-2 '>
-                                                <?php foreach ($productColor as $productColorData): 
-                                                    ?>
+                                                <?php foreach ($productColor as $productColorData):
+                                                ?>
                                                     <label>
                                                         <input type="radio" name="selectedImage" value="<?php echo $productColorData['color_name']; ?>" style="display: none;" />
-                                                        <img src=" <?php base_url('assets/upload/'. $productColorData['color_image']) ; ?>" style="width:50px;height:50px" alt="Product image" class="object-fit-contain border p-1 thumbnail pointer selectable-image " data-toggle="tooltip" title="<?php echo $productColorData['color_name']; ?>" data-p-price=<?php echo $productColorData['color_price'] == null ? $mianValueProduct['product_price'] : $productColorData['color_price'] ?>
-                                                        data-p-totalprice=<?php echo $productColorData['color_price'] == null ? $mianValueProduct['product_price']+$mianValueProduct['shipping_charge'] : $productColorData['color_price']+$mianValueProduct['shipping_charge']  ?>
-                                                        data-colorid=<?= $productColorData['color_id'] ?>
-                                                        />
+                                                        <img src=" <?php base_url('assets/upload/' . $productColorData['color_image']); ?>" style="width:50px;height:50px" alt="Product image" class="object-fit-contain border p-1 thumbnail pointer selectable-image " data-toggle="tooltip" title="<?php echo $productColorData['color_name']; ?>" data-p-price=<?php echo $productColorData['color_price'] == null ? $mianValueProduct['product_price'] : $productColorData['color_price'] ?>
+                                                            data-p-totalprice=<?php echo $productColorData['color_price'] == null ? $mianValueProduct['product_price'] + $mianValueProduct['shipping_charge'] : $productColorData['color_price'] + $mianValueProduct['shipping_charge']  ?>
+                                                            data-colorid=<?= $productColorData['color_id'] ?> />
                                                     </label>
                                                 <?php endforeach;
                                                 ?>
@@ -97,25 +107,25 @@ WHERE
                                     <?php endif; ?>
                                     <input type="hidden" id="product_color_id" value="null">
                                     <p class='text-danger d-none mb-3 fw-medium' id='color-error' style='margin-top: -8px;font-size:23px;'></p>
-                                    <?php if($mianValueProduct['product_size']!==''){ ?>
+                                    <?php if ($mianValueProduct['product_size'] !== '') { ?>
                                         <div class='d-flex mb-3'>
                                             <h4 class='text-paragraph' style='font-size:14px;margin-right:33px'>Size</h4>
                                             <div class='d-flex gap-2 '>
-                                            <a href="javascript:void(0)">
+                                                <a href="javascript:void(0)">
                                                     <div class=' p-1 px-2 border-primary  pointer hover-size-product' style='border:1px dashed #dde2e6 ;font-size:13px'><?php echo $mianValueProduct['product_size'] ?></div>
                                                 </a>
-                                            <?php if ($productSize = productSize($slug, $conn)): ?>
-                                                <?php foreach ($productSize as $productSizeData): ?>
-                                                    <a href="<?php echo $productSizeData['size_click_view_url'] ?>" target="_blank">
-                                                        <div class=' p-1 px-2  pointer hover-size-product' style='border:1px dashed #dde2e6 ;font-size:13px'><?php echo $productSizeData['size_name'] ?></div>
-                                                    </a>
-                                                <?php endforeach ?>
+                                                <?php if ($productSize = productSize($slug, $conn)): ?>
+                                                    <?php foreach ($productSize as $productSizeData): ?>
+                                                        <a href="<?php echo $productSizeData['size_click_view_url'] ?>" target="_blank">
+                                                            <div class=' p-1 px-2  pointer hover-size-product' style='border:1px dashed #dde2e6 ;font-size:13px'><?php echo $productSizeData['size_name'] ?></div>
+                                                        </a>
+                                                    <?php endforeach ?>
                                                 <?php endif ?>
-                                               
+
                                             </div>
                                         </div>
-                                        <?php } ?>
-                               
+                                    <?php } ?>
+
 
 
                                     <form action="<?php base_url('checkout') ?>" method="post">
@@ -135,7 +145,7 @@ WHERE
                                                 </button>
                                             </div>
                                         </div>
-                                        
+
                                         <div class='d-flex gap-2 mb-4 mt-3'>
                                             <button type="button" class="btn btn-primary  d-block w-100" name="buy_now" style='padding:8px' onclick="addToCart('buynow')">Buy Now</button>
                                             <button type="button" i class="btn btn-outline-primary d-block w-100" onclick="addToCart()">Add to Cart</button>
@@ -155,11 +165,11 @@ WHERE
                                                 <td><?php echo $mianValueProduct['product_brand_name'] ?></td>
                                             </tr>
                                             <?php
-                                           $product_props = json_decode($mianValueProduct['product_props'], true);
+                                            $product_props = json_decode($mianValueProduct['product_props'], true);
                                             foreach ($product_props as $product_props_key => $product_props_data) {
                                             ?>
                                                 <tr>
-                                                <th style='width:35%'><?php echo str_replace('_', ' ', $product_props_key); ?></th>
+                                                    <th style='width:35%'><?php echo str_replace('_', ' ', $product_props_key); ?></th>
                                                     <td style='width:65%'><?php echo $product_props_data ?></td>
                                                 </tr>
                                             <?php } ?>
@@ -206,7 +216,7 @@ WHERE
                         </ul>
                         <div class="tab-content product-view-details mt-4" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-details">
-                            <?php echo $mianValueProduct['product_description'] ?>
+                                <?php echo $mianValueProduct['product_description'] ?>
                             </div>
 
                             <div class="tab-pane fade" id="pills-reviews"></div>
@@ -218,32 +228,15 @@ WHERE
             </section>
 
 
-            <?php
-            $sql = "SELECT id,asin,product_photo,product_minimum_offer_price,sales_volume,product_title FROM product_main WHERE search='Home Decor' LIMIT 15";
-            if ($resutl = $conn->query($sql)) {
-                if ($resutl->num_rows > 0) {
-                    $mainData = [];
-                    while ($mianValueProduct = $resutl->fetch_assoc()) {
-                        $mainData[] = $mianValueProduct;
-                    }
-                    productScroll($mainData, 'Home Decor Product');
-                }
-            }
-            ?>
-           
-           <script>
-                $(document).ready(function() {
-                 
 
+            <script>
+                $(document).ready(function() {
                     $('.thumbnail').click(function() {
                         var newSrc = $(this).attr('src');
 
                         $('#zoom_01').removeData('elevateZoom');
                         $('.zoomContainer').remove();
-
                         $('#zoom_01').attr('src', newSrc);
-
-                       
                     });
                 });
             </script>

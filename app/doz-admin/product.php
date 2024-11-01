@@ -100,7 +100,7 @@ include_once('include/header.php');
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" onclick="return confirm('Are you sure you want to active this product?')" href="<?= base_url('admin-doz/show-product?status=1&id=' . $data['product_id']) ?>">Active</a>
                                                 <a onclick="return confirm('Are you sure you want to deactivate this product?')" class="dropdown-item" href="<?= base_url('admin-doz/show-product?status=2&id=' . $data['product_id']) ?>">Inactive</a>
-                                                <a onclick="return confirm('Are you sure you want to delete this product?')" class="dropdown-item" href="<?= base_url('admin-doz/show-product?delete=2&id=' . $data['product_id']) ?>">Delete</a>
+                                                <a onclick="return confirm('Are you sure you want to delete this product?')" class="dropdown-item" href="<?= base_url('admin-doz/show-product?delete=2&id=' . $data['product_id']) ?>"><i class="bx bx-trash me-1"></i>Delete</a>
                                                 <a class="dropdown-item" href="<?= base_url('admin-doz/view-product?id=' . $data['product_id']) ?>"><i class="bx bx-edit-alt me-1"></i> Edit</a>
                                             </div>
                                         </div>

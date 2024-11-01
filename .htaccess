@@ -66,6 +66,9 @@ RewriteRule ^admin-doz/update-product-category /dozkart/app/doz-admin/product-ca
 RewriteRule ^admin-doz/login-process /dozkart/app/doz-admin/login-process.php [L]
 RewriteRule ^admin-doz/logout /dozkart/app/doz-admin/logout.php [L]
 
+RewriteRule ^admin-doz/order /dozkart/app/doz-admin/order.php [L]
+RewriteRule ^admin-doz/vieworder /dozkart/app/doz-admin/view-order.php [L]
+
 
 
 

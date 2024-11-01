@@ -176,3 +176,66 @@ productPropsGenerator();
 
     $('#product-props').append(newRow);
     }
+
+
+    $(document).ready(function () {
+      $.ajax({
+          url: '../api/income-chart.php',
+          method: 'GET',
+          dataType: 'json',
+          success: function (data) {
+              // Prepare data for the chart
+              const months = data.map(item => item.month); // Extract month names
+              const incomeValues = data.map(item => parseFloat(item.total_income)); // Extract income values
+  
+              // Define chart options
+              const options = {
+                  chart: {
+                      type: 'bar',
+                      height: 400
+                  },
+                  series: [{
+                      name: 'Income (BDT)',
+                      data: incomeValues
+                  }],
+                  xaxis: {
+                      categories: months,
+                      title: {
+                          text: 'Months'
+                      }
+                  },
+                  yaxis: {
+                      title: {
+                          text: 'Income'
+                      }
+                  },
+                  title: {
+                      text: 'Monthly Income',
+                      align: 'center'
+                  },
+                  colors: ['#1E90FF'],
+                  dataLabels: {
+                      enabled: true,
+                      formatter: function (val) {
+                          return "৳" + val;
+                      }
+                  },
+                  tooltip: {
+                      y: {
+                          formatter: function (val) {
+                              return "৳" + val + " BDT";
+                          }
+                      }
+                  }
+              };
+  
+              // Create and render the chart
+              const totalIncomeChart = new ApexCharts(document.querySelector("#totalIncomeChart"), options);
+              totalIncomeChart.render();
+          },
+          error: function (xhr, status, error) {
+              console.error('Error fetching data:', error);
+          }
+      });
+  });
+  

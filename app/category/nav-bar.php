@@ -10,7 +10,7 @@
         </svg>
         Filter
     </button>
-    <h5 class='text-paragraph fw-normal d-block d-lg-none mb-0 ' style='font-size: 14px;'>Home / <strong><?php echo isset($query) ? $query : 'All Categories' ?></strong></h5>
+
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-body d-flex flex-column">
@@ -32,11 +32,7 @@
                     <div class="collapse " style="margin-top: 11px;">
                         <div class="d-flex flex-column gap-3">
                             <label for="flipkart" class="d-flex align-items-center gap-2  pointer">
-                                <input type="checkbox" class="form-check" id="flipkart" value="amazon" name="categoris" value='mixer-grinder'>
-                                <h5 class="text-black mb-0  f-14 fw-normal pointer hover-primary">Mixer Grinder</h5>
-                            </label>
-                            <label for="flipkart" class="d-flex align-items-center gap-2  pointer">
-                                <input type="checkbox" class="form-check" id="flipkart" value="flipcart" name="categoris" value='mixer-grinder'>
+                                <input type="checkbox" class="form-check" id="flipkart" value="mixer-grinder" name="categoris" value='mixer-grinder'>
                                 <h5 class="text-black mb-0  f-14 fw-normal pointer hover-primary">Mixer Grinder</h5>
                             </label>
                         </div>

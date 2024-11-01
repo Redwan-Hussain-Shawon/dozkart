@@ -1,21 +1,20 @@
 <?php define('MYSITE', true);
+include_once('../connect/base_url.php');
 include_once('../include/helper.php');
 protected_area();
-include_once('../connect/base_url.php');
+
 ?>
 <?php include_once('../include/header.php') ?>
 <?php include_once('../include/header_main.php');
 $user_id = getId();
 $sql = "SELECT * FROM notifications WHERE user_id=$user_id ORDER BY id DESC LIMIT 30";
 if ($result = $conn->query($sql)) {
-
 ?>
     <section class='my-5 px-2'>
         <div class='container'>
             <div class='row'>
                 <?php include_once('../include/account-header.php') ?>
                 <div class="col-lg-9" style='margin-top: 25px;'>
-                   
                         <section class="mt-3">
                             <div class='bg-light px-3 py-2 mb-3 rounded-1'>
                                 Notifications
