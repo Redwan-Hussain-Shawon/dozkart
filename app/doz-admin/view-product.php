@@ -57,6 +57,14 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                             </div>
                         </div>
                         <div class="col-md-4">
+                        <div class="form-password-toggle">
+                            <label class="form-label" for="product_discount">Product Discount</label>
+                            <div class="input-group input-group-merge">
+                                <input type="number" id="product_discount" name="product_discount" class="form-control" placeholder="discount like 50" pattern="[^%]*" aria-describedby="multicol-confirm-password2" required value="<?= $data['product_discount'] ?>">
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-4">
                             <div class="form-password-toggle">
                                 <label class="form-label" for="product_size">Product Size</label>
                                 <div class="input-group input-group-merge">

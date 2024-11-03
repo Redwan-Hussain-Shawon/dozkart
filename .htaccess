@@ -62,12 +62,14 @@ RewriteRule ^admin-doz/product-add /dozkart/app/doz-admin/product-add.php [L]
 RewriteRule ^admin-doz/update-product /dozkart/app/doz-admin/update-product.php [L]
 RewriteRule ^admin-doz/process-product-add /dozkart/app/doz-admin/product-process.php [L]
 RewriteRule ^admin-doz/product-category /dozkart/app/doz-admin/product-category.php [L]
-RewriteRule ^admin-doz/update-product-category /dozkart/app/doz-admin/product-category-update.php [L]
+RewriteRule ^admin-doz/cupdate-product-category /dozkart/app/doz-admin/product-category-update.php [L]
 RewriteRule ^admin-doz/login-process /dozkart/app/doz-admin/login-process.php [L]
 RewriteRule ^admin-doz/logout /dozkart/app/doz-admin/logout.php [L]
 
 RewriteRule ^admin-doz/order /dozkart/app/doz-admin/order.php [L]
 RewriteRule ^admin-doz/vieworder /dozkart/app/doz-admin/view-order.php [L]
+
+RewriteRule ^admin-doz/slider /dozkart/app/doz-admin/slider.php [L]
 
 
 

@@ -71,6 +71,8 @@ $sql = "INSERT INTO transactions (
 )";
 
 if ($conn->query($sql)) {
+    notifications($user_id, 'Thank you! Your payment was successful. Your order is now confirmed and will proceed to the next stage. Our team will keep you updated on its progress.');
+
     alert('success','Thank you for your purchase! Your product Submission was successful');
     header('Location:'.base_url1('orders'));
     exit();

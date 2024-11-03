@@ -10,6 +10,7 @@ include_once('include/helper.php');
 $product_title = mysqli_real_escape_string($conn, trim($_POST['product_title']));
 $product_category = mysqli_real_escape_string($conn, trim($_POST['product_category']));
 $product_price = mysqli_real_escape_string($conn, trim($_POST['product_price']));
+$product_discount = mysqli_real_escape_string($conn, trim($_POST['product_discount']));
 $product_size = mysqli_real_escape_string($conn, trim($_POST['product_size']));
 $product_ratting = mysqli_real_escape_string($conn, trim($_POST['product_ratting']));
 $product_rating_star = mysqli_real_escape_string($conn, trim($_POST['product_rating_star']));
@@ -38,6 +39,7 @@ $sql = "INSERT INTO products (
     product_title, 
     product_category, 
     product_price, 
+    product_discount, 
     product_size, 
     product_ratting, 
     product_rating_star, 
@@ -53,7 +55,8 @@ $sql = "INSERT INTO products (
 ) VALUES (
     '$product_title', 
     '$product_category', 
-    '$product_price', 
+    '$product_price',
+    '$product_discount', 
     '$product_size', 
     '$product_ratting', 
     '$product_rating_star', 
@@ -78,7 +81,7 @@ function uploadImages($fileArray)
 
             $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
 
-            $newFileName = pathinfo($fileName, PATHINFO_FILENAME) . "_" . date('Ymd_His') . "." . $fileExtension;
+            $newFileName = pathinfo($fileName, PATHINFO_FILENAME) . "_" . rand() . date('Ymd_His') . "." . $fileExtension;
 
             $targetFile = $targetDir . basename($newFileName);
 
@@ -94,6 +97,7 @@ function uploadImages($fileArray)
 
 
 if ($conn->query($sql)){
+   
     if (isset($_FILES['mainImage'])){
         $uploadedFiles = uploadImages($_FILES['mainImage']);
         if (!empty($uploadedFiles)) {
@@ -123,6 +127,72 @@ if(isset($_POST['size_name'])){
             $conn->query($sql);
         }
     }
+}
+
+if (isset($_POST['review_title'])) {
+
+    $review_titles = $_POST['review_title'];
+    $reviewer_names = $_POST['reviewer_name'];
+    $review_texts = $_POST['reviewer_description'];
+    $ratings = $_POST['review_star'];
+    $locations = $_POST['review_location'];
+    $review_dates = $_POST['review_data'];
+
+    function uploadImagesReview($fileArray)
+    {
+        $targetDir = '../../assets/upload/review/';
+        $uploadedFiles = [];
+    
+        foreach ($fileArray['name'] as $key => $fileName) {
+            if (!empty($fileName)) {
+                $tmpName = $fileArray['tmp_name'][$key];
+                $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+                $newFileName = pathinfo($fileName, PATHINFO_FILENAME) . "_" . date('Ymd_His') . "." . $fileExtension;
+                $targetFile = $targetDir . basename($newFileName);
+    
+                if (move_uploaded_file($tmpName, $targetFile)) {
+                    $uploadedFiles[] =  $newFileName;
+                }
+            }
+        }
+        
+        // Return as JSON-encoded string
+        return $uploadedFiles;
+    }
+
+
+    foreach ($review_titles as $index => $title) {
+
+        if (!empty(trim($title))){
+
+            $imgData = [];
+            if (isset($_FILES["review_img_" . ($index + 1)])) {
+                $imgData[] = uploadImagesReview($_FILES["review_img_" . ($index + 1)]);
+            }
+
+            $imagesJson = json_encode($imgData);
+
+            $title = mysqli_real_escape_string($conn, trim($title));
+            $reviewer_name = !empty(trim($reviewer_names[$index])) ? mysqli_real_escape_string($conn, trim($reviewer_names[$index])) : NULL;
+            $review_text = !empty(trim($review_texts[$index])) ? mysqli_real_escape_string($conn, trim($review_texts[$index])) : NULL;
+            $rating = isset($ratings[$index]) && is_numeric($ratings[$index]) ? intval($ratings[$index]) : NULL;
+            $location = !empty(trim($locations[$index])) ? mysqli_real_escape_string($conn, trim($locations[$index])) : NULL;
+            $review_date = $review_dates[$index] ?? date('Y-m-d');
+
+            // Insert review into the database
+            $sql = "INSERT INTO product_reviews 
+                        (product_slug, review_title, reviewer_name,review_text,review_rating,image, location, review_date) 
+                    VALUES 
+                        ('$product_slug', '$title', '$reviewer_name', '$review_text', '$rating','$imagesJson', '$location', '$review_date')";
+
+            if (!$conn->query($sql)) {
+                echo "Review Not Add";
+                exit;
+              
+            }
+        }
+    }
+
 }
 
 alert('success',' Your product has been uploaded successfully.');

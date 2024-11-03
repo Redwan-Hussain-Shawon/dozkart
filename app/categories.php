@@ -22,6 +22,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         (products.product_title LIKE '%$search%' 
         OR products.product_category LIKE '%$search%' 
         OR products.product_description LIKE '%$search%' 
+        OR products.website_name LIKE '%$search%' 
         OR product_color.color_name LIKE '%$search%' 
         OR products.product_price LIKE '%$search%' 
         OR products.product_brand_name LIKE '%$search%' 
@@ -41,7 +42,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
 <section class="p-2 py-3 bg-light">
     <div class="container">
         <?php
-        $results_per_page = 2;
+        $results_per_page = 38;
         $page = isset($_GET['page']) ? mysqli_real_escape_string($conn, trim($_GET['page'])) : 1;
         $offset = ($page - 1) * $results_per_page;
         $sql = "SELECT 

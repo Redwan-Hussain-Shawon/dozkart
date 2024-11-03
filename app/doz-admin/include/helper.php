@@ -40,4 +40,15 @@ function getOrderStatus($status) {
 }
 
 
+function notifications($user_id,$description,$img=null){
+    global $conn;
+    $sql = "INSERT INTO notifications(user_id,description,img)VALUES($user_id,'$description','$img')";
+    if($conn->query($sql)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
 ?>

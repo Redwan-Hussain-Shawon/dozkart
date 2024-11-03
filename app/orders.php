@@ -17,7 +17,7 @@ FROM
     orders o
 JOIN 
     products p ON o.product_slug = p.product_slug
-WHERE o.user_id=$user_id AND o.status!=8
+WHERE o.user_id=$user_id AND o.status!=8 ORDER BY o.id DESC
 ";
 $result = $conn->query($sql);
 
@@ -54,7 +54,7 @@ $result = $conn->query($sql);
                   </tr>
                 </tbody>
               </table>
-              <a href="<?php base_url('invoice/'.$order_data['id']) ?>"><button class="btn btn-primary">Download Invoice</button></a>
+              <a href="<?php base_url('invoice/'.$order_data['id']) ?>" target="_blank"><button class="btn btn-primary">Download Invoice</button></a>
 
             </div>
           </div>

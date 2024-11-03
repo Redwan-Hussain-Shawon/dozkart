@@ -106,7 +106,7 @@ $result = $conn->query($sql);
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="<?php base_url('admin-doz/product-category?status=1&id='.$data['category_id']) ?>">Active </a>
                 <a class="dropdown-item" href="<?php base_url('admin-doz/product-category?status=2&id='.$data['category_id']) ?>"> Inactive</a>
-                <a class="dropdown-item" href="<?php base_url('admin-doz/update-product-category?id='.$data['category_id']) ?>"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                <a class="dropdown-item" href="<?php base_url('admin-doz/cupdate-product-category?id='.$data['category_id']) ?>"><i class="bx bx-edit-alt me-1"></i> Edit</a>
               </div>
             </div>
           </td>

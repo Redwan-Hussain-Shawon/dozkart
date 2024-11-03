@@ -24,10 +24,10 @@ WHERE
 
             <meta property="og:title" content="<?= $mianValueProduct['product_title']; ?>">
             <meta property="og:description" content="<?php echo htmlspecialchars($mianValueProduct['product_brand_name']); ?> <?php echo htmlspecialchars($mianValueProduct['product_title']); ?> featuring a powerful <?php echo htmlspecialchars($mianValueProduct['product_price']); ?>W motor with Vent-X technology, <?php echo htmlspecialchars($mianValueProduct['product_size']); ?> stainless steel jars, rated <?php echo htmlspecialchars($mianValueProduct['product_ratting']); ?>/5 stars by <?php echo htmlspecialchars($mianValueProduct['product_rating_count']); ?> users. Available on <?php echo htmlspecialchars($mianValueProduct['website_name']); ?>.">
-            <?php if ($img = productImage($slug, $conn)) {?>
-            <meta property="og:image" content="<?php base_url('assets/upload/' . $img[0]['image_url'])  ?>">
+            <?php if ($img = productImage($slug, $conn)) { ?>
+                <meta property="og:image" content="<?php base_url('assets/upload/' . $img[0]['image_url'])  ?>">
             <?php } ?>
-            <meta property="og:url" content="<?php base_url('view-product/'.$mianValueProduct['product_slug']) ?>">
+            <meta property="og:url" content="<?php base_url('view-product/' . $mianValueProduct['product_slug']) ?>">
             <meta property="og:type" content="product">
 
 
@@ -42,7 +42,7 @@ WHERE
                     cursor: pointer;
                 }
             </style>
-            
+
             <section class='bg-light py-2 py-lg-4'>
                 <div class="container ">
                     <div class='bg-white  rounded-1 py-4'>
@@ -66,15 +66,24 @@ WHERE
                             <div class="col-lg-7 px-2 mt-0 mt-lg-3">
                                 <div class="h-100 rounded-3 ">
                                     <h1 class=" mt-4 mt-sm-2 px-0" style="line-height: 30px;font-size:19px;color:#212121"><?php echo $mianValueProduct['product_title'] ?></h1>
-                                    <div class='text-paragraph d-flex align-items-center' style='font-size: 14px;gap:1px'>
-                                        <span style="margin-right: 3px;"><?php echo $mianValueProduct['product_ratting'] ?></span>
-                                        <?php for ($i = 1; $i <= $mianValueProduct['product_rating_star']; $i++) { ?>
-                                            <img style='width:12px' src="<?php echo base_url('assets/img/star.png') ?>" alt='start' />
-                                        <?php } ?>
-
+                                    <div class='text-paragraph d-flex align-items-center' style='font-size: 14px;gap:1px;' >
+                                        <div style="background-color: #388e3c; padding: 3px 8px; border-radius: 3px; font-size: 12px;color:white"><?php echo $mianValueProduct['product_ratting'] ?>
+                                        <img style='width: 10px' src="<?= base_url('assets/img/star-white.svg'); ?>" alt='star' />
+                                        </div>
                                         <h4 class='text-paragraph d-inline-block mb-0' style="font-size: 14px;margin-left:8px"><?php echo $mianValueProduct['product_rating_count'] ?> Ratings & <?php echo $mianValueProduct['product_reviews'] ?> Reviews</h4>
                                     </div>
+                                    <div class="d-flex align-items-center">
                                     <div class="h4 fw-semibold text-accent py-2 mb-0" id='priceShow'>BDT <?php echo $mianValueProduct['product_price'] ?></div>
+                                    <div style="font-size: 16px; margin-left: 12px; vertical-align: middle; color: #878787; font-weight:500">
+    <del>BDT <?php echo $mianValueProduct['product_price'] * (1 + $mianValueProduct['product_discount'] / 100); ?></del>
+</div>
+
+                                    <div >
+    <span style="margin-left: 12px; font-size: 17px; font-weight: 600; color: #388e3c; vertical-align: middle;"><?php echo $mianValueProduct['product_discount'] ?>% off</span>
+</div>
+
+                                    </div>
+
                                     <div class='d-flex align-items-center gap-2 mb-1'>
                                         <h3 class='fw-semibold mb-0 text-paragraph' style='font-size: 15px;'>Shipping Charge: </h3>
                                         <p class='mb-0 f-15 fw-semibold'>BDT <?php echo $mianValueProduct['shipping_charge'] ?> (All Bangladesh ) </p>
@@ -219,13 +228,90 @@ WHERE
                                 <?php echo $mianValueProduct['product_description'] ?>
                             </div>
 
-                            <div class="tab-pane fade" id="pills-reviews"></div>
+                            <div class="tab-pane fade" id="pills-reviews">
+                                <?php 
+                                  $sql_review = "SELECT * FROM product_reviews WHERE product_slug='$slug'";
+                                  $result_review = $conn->query($sql_review);
+                                  if($result_review->num_rows>0){
+                                ?>
+        <h3 class="text-center fw-bold" style="font-size: 22px;">Some Reviews</h3>
+        <div class="d-flex flex-column gap-4">
+            <?php 
+          
+            while ($review = $result_review->fetch_assoc()){
+                 ?>
+                <div>
+    <div class="d-flex gap-2 align-items-center">
+        <button class="text-white" style="background-color: #388e3c; padding: 2px 4px; border-radius: 3px; font-size: 12px;">
+            <?= $review['review_rating']; ?> 
+            <img style='width: 10px' src="<?= base_url('assets/img/star-white.svg'); ?>" alt='star' />
+        </button>
+        <h5 class="mt-1" style="font-size: 14px; color: #212121; font-weight: 500;">
+            <?= htmlspecialchars($review['review_title']); ?>
+        </h5>
+    </div>
+    
+    <p class="mb-2 align-items-start">
+        <?= htmlspecialchars($review['review_text']) ?: 'No review text provided.'; ?>
+    </p>
+    
+    <div class="mb-2 d-flex align-items-center gap-1">
+    <?php 
+    // Decode the image JSON correctly
+    $images_json = $review['image'];
+
+    $images = json_decode($images_json, true); 
+    foreach ($images[0] as $image){ ?>
+        <img src="<?php base_url('assets/upload/review/' . htmlspecialchars($image)); ?>" 
+             style="width: 62px; height: 62px; border-radius: 3px; cursor: pointer;" 
+             alt="Review Image" 
+             onclick="openModal('<?= base_url('assets/upload/review/' . htmlspecialchars($image)); ?>')" />
+    <?php } ?>
+</div>
+
+
+
+    
+    <div class="d-flex align-items-center">
+        <div class="text-muted fw-bold" style="font-size: 12px; margin-right: 6px;"><?= htmlspecialchars($review['reviewer_name']) ?: 'Anonymous'; ?></div>
+        <div class="text-muted" style="font-size: 12px; margin-right: 6px;"><?= htmlspecialchars($review['location']) ?: 'Location not provided'; ?></div>
+        <div class="text-muted" style="font-size: 12px; margin-right: 6px;"><?= $review['review_date'] !== '0000-00-00' ? htmlspecialchars($review['review_date']) : 'Date not available'; ?></div>
+    </div>
+</div>
+
+            <?php }; ?>
+        </div>
+        <?php } ?>
+    </div>
                         </div>
                     </div>
                 </div>
 
 
             </section>
+
+<div id="imageModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-between">
+                <h5 class="modal-title">Image Preview</h5>
+                <button onclick="closeModal()" type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: 30px;height: 30px;font-weight: 600;background:#ffcbcb;
+">
+                    <span aria-hidden="true">✕</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <img id="modalImage" src="" alt="Review Image" style="width: 100%; height: 300px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 
@@ -251,3 +337,12 @@ WHERE
 } else {
     header('location:' . base_url1('404.php'));
 } ?>
+<script>
+    function openModal(imageSrc) {
+        document.getElementById('modalImage').src = imageSrc;
+        $('#imageModal').modal('show');
+    }
+    function closeModal() {
+        $('#imageModal').modal('hide'); 
+    }
+</script>

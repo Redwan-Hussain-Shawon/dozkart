@@ -6,7 +6,7 @@ if(isset($_GET['id'])){
     // protected_area();
     if(!is_logged_in()){
         header('location:'.base_url1('login'));
-        $_SESSION['redrict_url']='checkout/prestige-500-watts-orion-mixer-grinder-with-3-stainless-steel-jars-2-years-warranty-red-white-694';
+        $_SESSION['redrict_url']='checkout/'.$_GET['id'];
     }
     include_once('../connect/conn.php');
 
@@ -166,12 +166,7 @@ if(isset($_GET['id'])){
         BDT <?= calculateAdvancePayment(($product_price  + $mainData['shipping_charge'])* $quantity,$mainData['payment_advance']) ?>
     </span>
 </div>
-                        <div class='mb-3'>
-                            <label for="" class="mb-2 form-label">Select payment method:</label>
-                            <select name="" id="" class='form-select'>
-                                <option value="Online Full">Online <?= $mainData['payment_advance'] ?>%</option>
-                            </select>
-                        </div>
+
                         <input type="hidden" name="addressid">
                         
                        

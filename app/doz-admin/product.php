@@ -33,7 +33,7 @@ if (isset($_GET['delete']) && !empty($_GET['delete'])) {
 }
 
 // Fetch products with pagination
-$sql = "SELECT products.product_id, products.product_title, products.product_price, products.status, product_category.category_name, product_image.image_url
+$sql = "SELECT products.product_id, products.product_title, products.product_price,products.product_discount, products.status, product_category.category_name, product_image.image_url
         FROM products
         JOIN product_category ON products.product_category = product_category.category_slug
         JOIN product_image ON products.product_slug = product_image.product_slug
@@ -70,6 +70,7 @@ include_once('include/header.php');
                             <th>Product Title</th>
                             <th>Product Category</th>
                             <th>Product Price</th>
+                            <th>Product Discount</th>
                             <th>Product Image</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -86,6 +87,7 @@ include_once('include/header.php');
                                     <td><?= shortenText($data['product_title'], 60) ?></td>
                                     <td><?= $data['category_name'] ?></td>
                                     <td><?= $data['product_price'] ?></td>
+                                    <td><?= $data['product_discount'] ?>%</td>
                                     <td><img src="<?= base_url('assets/upload/' . $data['image_url']) ?>" class="rounded-1" style='width:60px;height:60px;' /></td>
                                     <td>
                                         <?php if ($data['status'] == 1) { ?>

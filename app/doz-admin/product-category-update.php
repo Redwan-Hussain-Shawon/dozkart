@@ -10,6 +10,9 @@ if(isset($_GET['id']) & !empty($_GET['id'])){
     $sql = "SELECT * FROM product_category WHERE category_id=$id";
     $result = $conn->query($sql);
     $data = $result->fetch_assoc();
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
 
 if(isset($_POST['category_submit'])){
     $category_name = mysqli_real_escape_string($conn,trim($_POST['category_name']));
@@ -23,9 +26,6 @@ if(isset($_POST['category_submit'])){
         redirect('admin-doz/product-category');
     }
 }
-
-
-
 
 include_once('include/header.php');
 

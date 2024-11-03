@@ -26,7 +26,7 @@ LEFT JOIN
 GROUP BY 
     s.status_id
 ORDER BY 
-    s.status_id;
+    s.status_id DESC;
 ";
 
         $result = $conn->query($query);
@@ -139,7 +139,7 @@ ORDER BY
         status != 8";
 
 if ($status !== null) {
-$query .= " AND status = " . intval($status); // Use intval to sanitize the input
+$query .= " AND status = " . intval($status);
 }
 
 // Continue with the rest of the query

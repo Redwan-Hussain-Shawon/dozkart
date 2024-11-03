@@ -67,8 +67,8 @@
 
                     <div class="collapse " style="margin-top: 11px;">
                         <div class="d-flex flex-column gap-3">
-                            <label for="flipkart" class="d-flex align-items-center gap-2  pointer">
-                                <input type="checkbox" class="form-check" id="flipkart" value="amazon">
+                            <label for="flipkarts" class="d-flex align-items-center gap-2  pointer">
+                                <input type="checkbox" class="form-check" id="flipkarts" value="flipkart" name="">
                                 <h5 class="text-black mb-0  f-14 fw-normal pointer hover-primary">Flipkart</h5>
                             </label>
                             <label for="amazon" class="d-flex align-items-center gap-2 pointer">

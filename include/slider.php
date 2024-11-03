@@ -38,24 +38,24 @@
   <div class='py-3'>
       <div class="container overflow-hidden">
           <div class="row">
-              <div class="col-lg-4 d-none d-lg-block pb-3">
-                  <?php include_once('../include/categories-bar.php') ?>
-              </div>
-              <div class="col-lg-8">
+              <!-- <div class="col-lg-4 d-none d-lg-block pb-3">
+                  
+              </div> -->
+              <div class="col-lg-12">
                   <div class="slider-top mySwiper position-relative">
                       <div class="swiper-pagination"></div>
                       <div class="swiper-wrapper position-relative">
                           <div class="swiper-slide rounded-1">
-                              <img src="<?php base_url('assets/img/slider-1.jpg')?>" alt="" class="rounded-1" style='max-height: 360px;height:auto;width:98%'>
+                              <img src="<?php base_url('assets/img/slider-1.jpg')?>" alt="" class="rounded-1" style='max-height: 400px;height:auto;width:98%'>
                           </div>
                           <div class="swiper-slide rounded-1">
-                              <img src="<?php base_url('assets/img/slider-2.jpg')?>" alt="" class="rounded-1" style='max-height: 360px;height:auto;width:98%'>
+                              <img src="<?php base_url('assets/img/slider-2.jpg')?>" alt="" class="rounded-1" style='max-height: 400px;height:auto;width:98%'>
                           </div>
                            <div class="swiper-slide rounded-1">
-                              <img src="<?php base_url('assets/img/slider-3.png')?>" alt="" class="rounded-1" style='max-height: 360px;height:auto;width:98%'>
+                              <img src="<?php base_url('assets/img/slider-3.png')?>" alt="" class="rounded-1" style='max-height: 400px;height:auto;width:98%'>
                           </div>
                            <div class="swiper-slide rounded-1">
-                              <img src="<?php base_url('assets/img/slider-4.png')?>" alt="" class="rounded-1" style='max-height: 360px;height:auto;width:98%'>
+                              <img src="<?php base_url('assets/img/slider-4.png')?>" alt="" class="rounded-1" style='max-height: 400px;height:auto;width:98%'>
                           </div>
                            <div class="swiper-slide rounded-1">
                               <img src="<?php base_url('assets/img/slider-5.png')?>" alt="" class="rounded-1" style='max-height: 360px;height:auto;width:98%'>

@@ -146,6 +146,14 @@ if(!isset($_SESSION['admin_redwan']) || empty($_SESSION['admin_redwan'])){
         <div class="text-truncate" data-i18n="Calendar">Orders</div>
       </a>
     </li> 
+
+    <li class="menu-item <?php echo strpos($_SERVER['REQUEST_URI'],'admin-doz/slider') !== false?'active':''?>">
+      <a href="<?php base_url('admin-doz/slider') ?>" class="menu-link">
+      <i class='menu-icon bx bx-slideshow'></i>
+
+        <div class="text-truncate" data-i18n="Calendar">Slider</div>
+      </a>
+    </li> 
  
 
           </ul>
@@ -190,19 +198,10 @@ if(!isset($_SESSION['admin_redwan']) || empty($_SESSION['admin_redwan'])){
                               <img src="<?php base_url('assets/img/avatar-place.png') ?>" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
-                          <div class="flex-grow-1">
-                            <h6 class="mb-0">John Doe</h6>
-                            <small class="text-muted">Admin</small>
+                          <div class="flex-grow-1 align-items-center">
+                            <h6 class="mb-0">Admin</h6>
                           </div>
                         </div>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider my-1"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-user bx-md me-3"></i><span>My Profile</span>
                       </a>
                     </li>
 

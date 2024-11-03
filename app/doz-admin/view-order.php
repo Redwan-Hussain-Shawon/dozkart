@@ -9,6 +9,12 @@ if (isset($_GET['status']) && !empty($_GET['status'])) {
   $status = mysqli_real_escape_string($conn, trim($_GET['status']));
   $sql = "UPDATE orders SET status=$status";
   if ($conn->query($sql)) {
+    $id = $_GET['id'];
+    $sql_not = "SELECT user_id FROM orders WHERE id=$id";
+    $result_not = $conn->query($sql_not);
+    $data_not = $result_not->fetch_assoc();
+    $user_id = $data_not['user_id'];
+    notifications($user_id,'Congratulations Your order has been '.getOrderStatus($status));
     alert('success', 'Order has been updated successfully.');
     header('location:vieworder?id=' . $_GET['id']);
     exit();

@@ -137,7 +137,7 @@ function loadCartItems() {
                   cartItemsContainer.innerHTML = `
                       <img src="${url+'assets/img/empty-cart.png'}" class='mx-auto d-flex' style='width:70%;' />
                       <span class="text-center mt-3 d-block">Your Cart is Empty</span>
-                      <a href="#" class="btn btn-primary d-block mt-2" style='color:white !important;'>Start Shopping</a>
+                      <a href="${url+'categories'}" class="btn btn-primary d-block mt-2" style='color:white !important;'>Start Shopping</a>
                   `;
               }
           } else if (response.error === 'not_logged_in') {
@@ -463,6 +463,7 @@ const filterSubmit = ()=>{
 
   if (!hasFilters) {
       console.log("No valid filters selected. AJAX request will not be sent.");
+      console.log(filters)
       return;
   }
 
